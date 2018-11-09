@@ -1,0 +1,1038 @@
+package com.ruffo.servicios.implementaciones;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.ws.rs.core.Response;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.ruffo.dao.ActividadMascotaDao;
+import com.ruffo.dao.BPMMascotaDao;
+import com.ruffo.dao.CaracteristaEspecialDao;
+import com.ruffo.dao.ColorDao;
+import com.ruffo.dao.DepartamentoDao;
+import com.ruffo.dao.LocalidadDao;
+import com.ruffo.dao.MascotaDao;
+import com.ruffo.dao.MascotaPerdidaDao;
+import com.ruffo.dao.PaisDao;
+import com.ruffo.dao.ParteMascotaDao;
+import com.ruffo.dao.RazaDao;
+import com.ruffo.dao.SexoMascotaDao;
+import com.ruffo.dao.TamanioDao;
+import com.ruffo.dao.TipoMascotaDao;
+import com.ruffo.dao.UsuarioDao;
+import com.ruffo.dto.BusquedaBeaconParametroDto;
+import com.ruffo.dto.CaracteristicaEspecialDto;
+import com.ruffo.dto.EnvioMailMascotaEncontradaDto;
+import com.ruffo.dto.EnvioMailMascotaEncontradaPropiaDto;
+import com.ruffo.dto.MascotaPerdidaDto;
+import com.ruffo.dto.RespuestaEncontradaDto;
+import com.ruffo.dto.RespuestaTxtDto;
+import com.ruffo.dto.ResultadoLecturaBeaconDto;
+import com.ruffo.entidades.ActividadMascota;
+import com.ruffo.entidades.BPMMascota;
+import com.ruffo.entidades.CaracteristicaEspecial;
+import com.ruffo.entidades.CaracteristicaEspecialTemporal;
+import com.ruffo.entidades.Color;
+import com.ruffo.entidades.Departamento;
+import com.ruffo.entidades.Imagen;
+import com.ruffo.entidades.Localidad;
+import com.ruffo.entidades.Mascota;
+import com.ruffo.entidades.MascotaPerdida;
+import com.ruffo.entidades.Pais;
+import com.ruffo.entidades.ParteMascota;
+import com.ruffo.entidades.Raza;
+import com.ruffo.entidades.SexoMascota;
+import com.ruffo.entidades.Tamanio;
+import com.ruffo.entidades.TipoMascota;
+import com.ruffo.entidades.Usuario;
+import com.ruffo.mensajes.MensajesValidacion;
+import com.ruffo.servicios.interfaces.MascotaPerdidaService;
+import com.ruffo.utils.Constantes;
+import com.ruffo.utils.EncolaMensaje;
+import com.ruffo.utils.PrivilegiosChequeoException;
+import com.ruffo.utils.SeguridadChequeoException;
+
+@Stateless
+public class MascotaPerdidaServiceImp implements MascotaPerdidaService {
+
+	private static final String MASCOTAS_GENERICA = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAJYCAIAAAAVFBUnAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpCQTlCRTVGNkExQkVFNTExQjBERjlBODA1QzdEMTFGQSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGRDhBMjUzNUM2OUExMUU2QjUxODk1MDAzMzgzNTJGOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGRDhBMjUzNEM2OUExMUU2QjUxODk1MDAzMzgzNTJGOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBNjk1OUQyMzlBQzZFNjExQjJGRUUyNDdCRkYwNTJBMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCODlCRTVGNkExQkVFNTExQjBERjlBODA1QzdEMTFGQSIvPiA8L3JkZjpEZXNjcmlwdGlv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";
+
+	private static final String PATA_PNG = "data:image/png;base64,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";
+	@Inject
+	MascotaDao mascotaDao;
+	
+	@Inject
+	MascotaPerdidaDao mascotaPerdidaDao;
+	
+	@Inject
+	UsuarioDao usuarioDao;
+	
+	@Inject
+	LocalidadDao localidadDao;
+	
+	@Inject
+	TipoMascotaDao tipoMascotaDao;
+	
+	@Inject
+	RazaDao razaDao;
+	
+	@Inject
+	PaisDao paisDao;
+	
+	@Inject
+	DepartamentoDao departamentoDao;
+	
+	@Inject
+	TamanioDao tamanioMascotaDao;
+	
+	@Inject
+	SexoMascotaDao sexoMascotaDao;
+	
+	@Inject
+	ColorDao colorMascotaDao;
+	
+	@Inject
+	ParteMascotaDao parteMascotaDao;
+	
+	@Inject
+	BPMMascotaDao bpmMascotaDao;
+	
+	@Inject
+	ActividadMascotaDao actividadMascotaDao;
+	
+	@Inject
+	CaracteristaEspecialDao caracteristaEspecialDao;
+	
+	@Inject
+	EncolaMensaje encolardorMensajes;
+
+	@Override
+	public Response agregarMascotaAjenaEncontrada(MascotaPerdidaDto mascotaDto) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		String nombre = mascotaDto.getNombre();
+		List<String> imagenes = mascotaDto.getImagenes();
+		Boolean busquedaActiva = true;
+		String telefono = mascotaDto.getTelefono();
+		
+//		if (imagenes == null || imagenes.size() < 1)
+//			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "imagen de la mascota")).build();
+		
+		//No se permite agregar una mascota como extraviada si existe una con el nro de beacon o nro de chip
+		String nroChip = mascotaDto.getNroChip() != null ? mascotaDto.getNroChip() : null;		
+		String nroBeacon = mascotaDto.getNroBeacon() !=null ? mascotaDto.getNroBeacon() : null;
+		
+		List<MascotaPerdida> mascotasPorBeacon = mascotaPerdidaDao.obtenerMascotasBusquedaActivaPorAtributo(nroBeacon, "nroBeacon");
+		if (StringUtils.isNotBlank(nroBeacon) && mascotasPorBeacon != null && mascotasPorBeacon.size() > 0)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.MASCOTA_CON_NRO_BEACON_YA_REPORTADA).build();
+				
+		List<MascotaPerdida> mascotasPorNroChip = mascotaPerdidaDao.obtenerMascotasBusquedaActivaPorAtributo(nroChip, "nroChip");
+		if (StringUtils.isNotBlank(nroChip) && mascotasPorNroChip != null && mascotasPorNroChip.size() > 0)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.MASCOTA_CON_NRO_CHIP_YA_REPORTADA).build();
+		
+		//Sexo de mascota
+		String sexo = mascotaDto.getSexo();
+		if (StringUtils.isBlank(sexo))
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "sexo de la mascota")).build();
+		List<SexoMascota> sexosDeMascota = sexoMascotaDao.findByAttribute(sexo, "descripcion");
+		if (sexosDeMascota == null || sexosDeMascota.size() < 1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.SEXO_INCORRECTO, "sexo de la mascota")).build();
+				
+		//Usuario que encontró la mascota
+		String usuario = mascotaDto.getPropietario();
+		if (StringUtils.isNotBlank(usuario)) {
+			List<Usuario> usuariosPorMail = usuarioDao.findByAttribute(usuario, "eMail");
+			if (usuariosPorMail == null || usuariosPorMail.size() < 1)
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.USUARIO_INEXISTENTE)).build();
+		}
+		
+		//Tipo de mascota
+		String tipo = mascotaDto.getTipo();
+		String tipoMascota = tipo;	
+		List<TipoMascota> tiposDeMascotas = null;
+		if (StringUtils.isNotBlank(tipoMascota)) {
+			tiposDeMascotas = tipoMascotaDao.findByAttribute(tipoMascota, "descripcion");
+			if (tiposDeMascotas == null || tiposDeMascotas.size() < 1) 
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.TIPO_DE_MASCOTA_INEXISTENTE)).build();
+		}
+		else 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "tipo de mascota")).build();
+		
+		//Raza de la mascota
+		String razaMascota = null;
+		List<Raza> razasMascotas = razaDao.obtenerRazasPorTipoDeMascota(tiposDeMascotas.get(0).getDescripcion());
+		if (razasMascotas == null || razasMascotas.size() < 1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.RAZA_INEXISTENTE)).build();
+		for (Raza raza : razasMascotas) {
+			if (raza.getDescripcion().equalsIgnoreCase(mascotaDto.getRaza())) {
+				razaMascota = raza.getDescripcion();
+				continue;
+			}
+		}
+		if (razaMascota == null)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.RAZA_INEXISTENTE)).build();
+		
+		//Tamanio de la mascota
+		String tamanioMascota = mascotaDto.getTamanio();	
+		if (StringUtils.isNotBlank(tamanioMascota)) {
+			List<Tamanio> tamaniosDeMascotas = tamanioMascotaDao.findByAttribute(tamanioMascota, "descripcion");
+			if (tamaniosDeMascotas == null || tamaniosDeMascotas.size() < 1)
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.TAMANIO_DE_MASCOTA_INEXISTENTE)).build();
+		}
+		else 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "tamaño de mascota")).build();
+		
+		//Color predominante
+		String colorPredominanteMascota = mascotaDto.getColorPredominante();	
+		if (StringUtils.isNotBlank(colorPredominanteMascota) ) {
+			List<Color> coloresPredominantesDeMascotas = colorMascotaDao.obtenerColorPorTipoYDescripcion("P", colorPredominanteMascota);
+			if (coloresPredominantesDeMascotas == null || coloresPredominantesDeMascotas.size() < 1)
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.COLOR_PREDOMINANTE_INCORRECTO).build();
+		}
+		else
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "color predominante de la mascota")).build();
+		
+		//Color secundario
+		String colorSecundarioMascota = mascotaDto.getColorSecundario();
+		if (StringUtils.isNotBlank(colorSecundarioMascota)) {
+			List<Color> coloresSecundariosDeMascotas = colorMascotaDao.obtenerColorPorTipoYDescripcion("S", colorSecundarioMascota);
+			if (coloresSecundariosDeMascotas == null || coloresSecundariosDeMascotas.size() < 1)
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.COLOR_SECUNDARIO_INCORRECTO).build();
+		}
+		
+		
+		//Carcteristicas especiales
+		List<String> caracteristicas = mascotaDto.getCaracteristicas();
+		if (caracteristicas != null && caracteristicas.size() > 0) {
+			for (String caracteristica : caracteristicas) {
+				if (StringUtils.isNotBlank(caracteristica)) {
+					List<CaracteristicaEspecial> caracteristaEspeciales = caracteristaEspecialDao.findByAttribute(caracteristica, "nombre");
+					if (caracteristaEspeciales == null || caracteristaEspeciales.size() < 1)
+						return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.CARACTERISTICA_ESPECIAL_INCORRECTA_DETALLADA, caracteristica)).build();
+				}
+			}			
+		}
+		
+		// Pais
+		String pais = mascotaDto.getPais();
+		List<Pais> findByAttributePais = paisDao.findByAttribute(pais, "nombre");
+		if (findByAttributePais == null || findByAttributePais.size() < 1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.PAIS_INEXISTENTE).build();
+		
+		// Departamento
+		String departamento = mascotaDto.getDepartamento();
+		List<Departamento> findByAttributeDepartamento = departamentoDao.findByAttribute(departamento, "descripcion");
+		if (findByAttributeDepartamento == null || findByAttributeDepartamento.size() < 1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.DEPARTAMENTO_INEXISTENTE).build();
+		
+		// Localidad
+		String localidad = mascotaDto.getLocalidad();
+		Long idDepartamento = findByAttributeDepartamento.get(0).getId();
+		Localidad findByAttributeLocalidad = localidadDao.obtenerLocalidDeDepartamento(localidad, idDepartamento);
+		if (findByAttributeLocalidad == null || findByAttributeDepartamento.size() < 1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.LOCALIDAD_INEXISTENTE).build();
+		
+		Long latitud = mascotaDto.getLatitud();
+		Long longitud = mascotaDto.getLongitud();
+		List<String> caracteristicasEspeciales = mascotaDto.getCaracteristicas();
+		
+		MascotaPerdida mascotaPerdida = new MascotaPerdida(null, nombre, sexo, razaMascota, tamanioMascota, colorPredominanteMascota, colorSecundarioMascota, nroChip, nroBeacon, usuario, pais, departamento, localidad, latitud, longitud, telefono, imagenes, caracteristicasEspeciales, busquedaActiva, tipoMascota, new Date());
+		mascotaPerdidaDao.persist(mascotaPerdida);		
+		mascotaDto.setId(mascotaPerdida.getId());
+		return Response.ok().status(Response.Status.ACCEPTED).entity(mascotaDto).build();
+	}
+
+	@Override
+	public Response agregarCaracteristicaEspecial(CaracteristicaEspecialDto caracteristicaEspecialDto) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		String nombre = caracteristicaEspecialDto.getNombre();
+		if (StringUtils.isBlank(nombre))
+			return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "nombre de la caracteristica especial")).build();
+		String parteMascota = caracteristicaEspecialDto.getParteMascota();
+		List<ParteMascota> partesDeMascotas = parteMascotaDao.findByAttribute(parteMascota.toUpperCase(), "descripcion");
+		if (partesDeMascotas == null || partesDeMascotas.size() < 1) {
+			CaracteristicaEspecial caracterisitaEspecial = new CaracteristicaEspecial();
+			caracterisitaEspecial.setParteMascota(partesDeMascotas.get(0));
+			caracterisitaEspecial.setNombre(nombre);
+			caracteristaEspecialDao.persist(caracterisitaEspecial);
+			return Response.ok().status(Response.Status.ACCEPTED).entity(caracterisitaEspecial).build();
+		}
+		else {
+			return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.PARTE_DE_MASCOTA_EXISTENTE).build();
+		}		
+	}
+
+	@Override
+	public Response modificarCaracteristicaEspecial(CaracteristicaEspecialDto caracteristicaEspecialDto) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		Long id = caracteristicaEspecialDto.getId();
+		CaracteristicaEspecial caracterisitaEspecial = caracteristaEspecialDao.find(id);
+		if (caracterisitaEspecial == null)
+			return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.CARACTERISTICA_ESPECIAS_INCORRECTA).build();
+		String parteMascotaString = caracteristicaEspecialDto.getParteMascota();
+		List<ParteMascota> partesDeMascotas = parteMascotaDao.findByAttribute(parteMascotaString.toUpperCase(), "descripcion");
+		ParteMascota parteMascotaNueva = null;
+		if (partesDeMascotas != null && partesDeMascotas.size() > 0) {
+			parteMascotaNueva = partesDeMascotas.get(0);
+		}
+		else 
+			return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).entity(MensajesValidacion.PARTE_DE_MASCOTA_INCORRECTA).build();
+
+		String nombre = caracteristicaEspecialDto.getNombre();
+		if (StringUtils.isBlank(nombre))
+			return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "nombre de la caracteristica especial")).build();
+		
+		caracterisitaEspecial.setNombre(nombre);
+		caracterisitaEspecial.setParteMascota(parteMascotaNueva);
+		caracteristaEspecialDao.edit(caracterisitaEspecial);
+		return Response.ok().status(Response.Status.ACCEPTED).entity(caracterisitaEspecial).build();
+	}
+
+	@Override
+	public Response buscarMascotaPerdidaEnBPM(MascotaPerdidaDto mascotaAjenaEncontradaDto) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		// Esto se ejecuta cuando una persona encuentra una mascota ajena en la calle y la reporta. Se muestran los datos del propietario y se envia un mail al propietario con los datos de la persona que la encuentra
+		//En el campo propietario siempre va el destinatario del mail. A la persona que hay que avisarle.
+		Long idMascotaPerdida = mascotaAjenaEncontradaDto.getId();
+		if (idMascotaPerdida == null || idMascotaPerdida <  1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "id mascota perdida"))).build();
+		
+		String emailDeUsuarioQueEncontro = mascotaAjenaEncontradaDto.getPropietario();
+		if (StringUtils.isBlank(emailDeUsuarioQueEncontro))
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "e-mail del usuario que encuentra la mascota"))).build();
+		
+		List<Usuario> usuariosPorMail = usuarioDao.findByAttribute(emailDeUsuarioQueEncontro, "eMail");		
+		if (usuariosPorMail == null || usuariosPorMail.size() < 1) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.USUARIO_INEXISTENTE))).build();
+		
+		//Se busca por id de mascota
+		Mascota mascotaBuscada = null;
+		Long idMascota = mascotaAjenaEncontradaDto.getIdMascota();
+		Usuario usuarioQueEncuentra = usuariosPorMail.get(0);
+		RespuestaEncontradaDto respuestaEncontradaDto = null;
+		if (idMascota != null && idMascota > 0) {
+			mascotaBuscada = bpmMascotaDao.buscarMascotaPerdidaPorIdMascota(idMascota);
+			if (mascotaBuscada != null) {		
+				BPMMascota bpm = bpmMascotaDao.obtenerBPMDeMascotaExtraviada(idMascota);
+				MascotaPerdida mascotaPerdida = mascotaPerdidaDao.find(idMascotaPerdida);
+				if (bpm.getFechaDesde() != null && mascotaPerdida.getFecha() != null && bpm.getFechaDesde().after(mascotaPerdida.getFecha())) {
+					// Se reportó primero la ajena como extraviada y luego la encuentra el propietario
+					// El que la encuentra es el usuario propietario. Se le envía un mail al usuario que la encuentra
+					// para avisarle que encontraron la mascota que reportó, con los datos de contacto del propietario.
+					// Se muestran los datos del usuario que la encontró en pantalla 
+					List<Usuario> usuariosDestino = usuarioDao.findByAttribute(mascotaPerdida.getPropietario(), "eMail");
+					Usuario usuarioQueEncuentraMascotaAjena = usuariosDestino.get(0);
+					Usuario propietarioDeMascotaBuscada = mascotaBuscada.getPropietario();
+					
+					String telDeContactoDelPropietario = StringUtils.isNotBlank(propietarioDeMascotaBuscada.getTelefono()) ? propietarioDeMascotaBuscada.getTelefono() : "No disponible";
+					String destinatario = usuarioQueEncuentraMascotaAjena.geteMail();
+					String nombreMascota = mascotaBuscada.getNombre();
+					String mailPropietarioMascota = mascotaBuscada.getPropietario().geteMail();
+					String texto = crearTextoParaMailDeMascotaPerdidaEncontrada(mascotaPerdida, mascotaBuscada);
+					EnvioMailMascotaEncontradaPropiaDto objetoMail2 = new EnvioMailMascotaEncontradaPropiaDto(destinatario, nombreMascota, mailPropietarioMascota, telDeContactoDelPropietario, texto);
+					encolardorMensajes.encolarMensaje(objetoMail2);				
+					
+					String nombre = usuarioQueEncuentraMascotaAjena.getNombre();
+					String mail = usuarioQueEncuentraMascotaAjena.geteMail();
+					String telefono = StringUtils.isNotBlank(usuarioQueEncuentraMascotaAjena.getTelefono()) ? usuarioQueEncuentraMascotaAjena.getTelefono() : "No disponible";				
+					respuestaEncontradaDto = new RespuestaEncontradaDto(nombre, mail, telefono, nombreMascota);
+				}
+				else {
+					// Se reportó primero la propia como extraviada
+					List<Usuario> usuarioDestino = usuarioDao.findByAttribute(mascotaPerdida.getPropietario(), "eMail");
+					Usuario usuario = usuarioDestino.get(0);
+					String telefonoDeContacto = StringUtils.isNotBlank(usuario.getTelefono()) ? usuario.getTelefono() : "No disponible";
+					String destinatario = mascotaBuscada.getPropietario().geteMail();
+					String nombreMascota = mascotaBuscada.getNombre();
+					String mailUsuarioQueEncuentra = mascotaPerdida.getPropietario();
+					EnvioMailMascotaEncontradaDto objetoMail = new EnvioMailMascotaEncontradaDto(destinatario, nombreMascota, mailUsuarioQueEncuentra, telefonoDeContacto);
+					encolardorMensajes.encolarMensaje(objetoMail);				
+					
+					String nombre = mascotaBuscada.getPropietario().getNombre();
+					String mail = mascotaBuscada.getPropietario().geteMail();
+					String telefono = StringUtils.isNotBlank(mascotaBuscada.getPropietario().getTelefono()) ? mascotaBuscada.getPropietario().getTelefono() : "No disponible";				
+					respuestaEncontradaDto = new RespuestaEncontradaDto(nombre, mail, telefono, nombreMascota);
+					
+				}
+				pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, idMascota);
+				List<String> imagenesString = obtenerStringDeImagenes(mascotaBuscada);
+				if (imagenesString != null && imagenesString.size() > 0) 
+					respuestaEncontradaDto.setImagenes(imagenesString.get(0));
+				return Response.ok().status(Response.Status.ACCEPTED).entity(respuestaEncontradaDto).build();					
+			}			
+		}
+				
+		//Se busca por nro de Beacon
+		String nroBeacon = mascotaAjenaEncontradaDto.getNroBeacon();
+		if (nroBeacon != null) {
+			mascotaBuscada = bpmMascotaDao.buscarMascotaPerdidaPorBeacon(nroBeacon);
+			if (mascotaBuscada != null) {	
+				String telefonoDeContacto = StringUtils.isNotBlank(usuarioQueEncuentra.getTelefono()) ? usuarioQueEncuentra.getTelefono() : "No disponible";
+				String destinatario = mascotaBuscada.getPropietario().geteMail();
+				String nombreMascota = mascotaBuscada.getNombre();
+				String mailUsuarioQueEncuentra = usuarioQueEncuentra.geteMail();
+				EnvioMailMascotaEncontradaDto objetoMail = new EnvioMailMascotaEncontradaDto(destinatario, nombreMascota, mailUsuarioQueEncuentra, telefonoDeContacto);
+				encolardorMensajes.encolarMensaje(objetoMail);				
+				
+				String nombre = mascotaBuscada.getPropietario().getNombre();
+				String mail = mascotaBuscada.getPropietario().geteMail();
+				String telefono = StringUtils.isNotBlank(mascotaBuscada.getPropietario().getTelefono()) ? mascotaBuscada.getPropietario().getTelefono() : "No disponible";				
+				respuestaEncontradaDto = new RespuestaEncontradaDto(nombre, mail, telefono, nombreMascota);
+				
+				pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, mascotaBuscada.getId());
+				List<String> imagenesString = obtenerStringDeImagenes(mascotaBuscada);
+				if (imagenesString != null && imagenesString.size() > 0) 
+					respuestaEncontradaDto.setImagenes(imagenesString.get(0));
+				return Response.ok().status(Response.Status.ACCEPTED).entity(respuestaEncontradaDto).build();					
+			}			
+		}
+		
+		//Se busca por nro de chip
+		String numeroChip = mascotaAjenaEncontradaDto.getNroChip();
+		if (numeroChip != null) {
+			mascotaBuscada = bpmMascotaDao.buscarMascotaPerdidaPorNroChip(numeroChip);
+			if (mascotaBuscada != null) {
+				String telefonoDeContacto = StringUtils.isNotBlank(usuarioQueEncuentra.getTelefono()) ? usuarioQueEncuentra.getTelefono() : "No disponible";
+				String destinatario = mascotaBuscada.getPropietario().geteMail();
+				String nombreMascota = mascotaBuscada.getNombre();
+				String mailUsuarioQueEncuentra = usuarioQueEncuentra.geteMail();
+				EnvioMailMascotaEncontradaDto objetoMail = new EnvioMailMascotaEncontradaDto(destinatario, nombreMascota, mailUsuarioQueEncuentra, telefonoDeContacto);
+				encolardorMensajes.encolarMensaje(objetoMail);				
+				
+				String nombre = mascotaBuscada.getPropietario().getNombre();
+				String mail = mascotaBuscada.getPropietario().geteMail();
+				String telefono = StringUtils.isNotBlank(mascotaBuscada.getPropietario().getTelefono()) ? mascotaBuscada.getPropietario().getTelefono() : "No disponible";				
+				respuestaEncontradaDto = new RespuestaEncontradaDto(nombre, mail, telefono, nombreMascota);
+				
+				pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, mascotaBuscada.getId());
+				List<String> imagenesString = obtenerStringDeImagenes(mascotaBuscada);
+				if (imagenesString != null && imagenesString.size() > 0) 
+					respuestaEncontradaDto.setImagenes(imagenesString.get(0));
+				return Response.ok().status(Response.Status.ACCEPTED).entity(respuestaEncontradaDto).build();					
+			}			
+		}
+		
+		//Se realiza la primer busqueda filtro
+		String tipoMascota = mascotaAjenaEncontradaDto.getTipo();
+		String colorPredominanteMascota = mascotaAjenaEncontradaDto.getColorPredominante();
+		List<BPMMascota> primerAproximacionMascotaPerdidas = bpmMascotaDao.buscarPrimerAproximacionMascotaPerdida(tipoMascota, colorPredominanteMascota);
+		
+		List<String> caracteristicasMascotaEncontrada = mascotaAjenaEncontradaDto.getCaracteristicas();
+		int cantidadDeCaracetisticasEspecialesMascotaEncontrada = caracteristicasMascotaEncontrada == null ? 0 : caracteristicasMascotaEncontrada.size();
+		List<MascotaPerdidaDto> retorno = new ArrayList<>();
+		//Se iteran las caracteristicas especiales de las mascotas peridas en el BPM con las caracteristicas especiales
+		//de la mascota encontrada. Se arma un porcentaje basado en las coincidencias de las caracteristicas especiales
+		MascotaPerdidaDto mascotaPerdidaRetornoDto = null;
+		Mascota mascotaAproximada = null;
+		if (existenMascotasEnPrimerAproximacion(primerAproximacionMascotaPerdidas)) {
+			for (BPMMascota bpmMascota : primerAproximacionMascotaPerdidas) {
+				int coincidenciasCEspeciales = 0;
+				int coincidenciasCFijas = 0;
+				List<CaracteristicaEspecialTemporal> caracteristicasEspecialesMacotaPerdida = bpmMascota.getCaracteristicasEspeciales();
+				BigDecimal cantidadDeCaracteristicasEspeciales = new BigDecimal(0);
+				if (caracteristicasEspecialesMacotaPerdida != null && caracteristicasEspecialesMacotaPerdida.size() > 0 && cantidadDeCaracetisticasEspecialesMascotaEncontrada > 0) {
+					cantidadDeCaracteristicasEspeciales = new BigDecimal(caracteristicasEspecialesMacotaPerdida.size());
+					for (CaracteristicaEspecialTemporal caracteristicaEspecialMascotaPerdida : caracteristicasEspecialesMacotaPerdida) {
+						for (String caracteristicaString : caracteristicasMascotaEncontrada) {							
+							if (caracteristicaEspecialMascotaPerdida.getCaracterista().getNombre().equalsIgnoreCase(caracteristicaString)) {
+								coincidenciasCEspeciales++;
+							}
+						}
+					}
+				}
+				
+				mascotaAproximada = mascotaDao.find(bpmMascota.getMascota().getId());
+				//Se contabilizan los hits de las caracterísitcas especiales
+				if (coincidenciasCEspeciales > 0) {
+					mascotaPerdidaRetornoDto = new MascotaPerdidaDto();
+					mascotaPerdidaRetornoDto = crearMascotaPerdidaRetorno(mascotaAproximada, mascotaAjenaEncontradaDto);
+					mascotaPerdidaRetornoDto.setHitsCaracteristicasEspeciales((coincidenciasCEspeciales * 100) / (cantidadDeCaracetisticasEspecialesMascotaEncontrada < 1 ? 1 : cantidadDeCaracetisticasEspecialesMascotaEncontrada));
+				}
+				
+				//Se contabilizan los hits de las caracterísitcas fijas de la mascota
+				BigDecimal cantidadDeCaracteristicasFijas = new BigDecimal(6);
+				if (StringUtils.isNotBlank(mascotaAjenaEncontradaDto.getRaza()) && mascotaAproximada.getRaza() != null && mascotaAjenaEncontradaDto.getRaza().equalsIgnoreCase(mascotaAproximada.getRaza().getDescripcion()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaAjenaEncontradaDto.getTamanio()) && mascotaAproximada.getTamanio() != null && (mascotaAjenaEncontradaDto.getTamanio().equalsIgnoreCase(mascotaAproximada.getTamanio().getDescripcion()) || mascotaAjenaEncontradaDto.getTamanio().equalsIgnoreCase("MEDIANO")))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaAjenaEncontradaDto.getNombre()) && mascotaAproximada.getNombre() != null && mascotaAjenaEncontradaDto.getNombre().equalsIgnoreCase(mascotaAproximada.getNombre()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaAjenaEncontradaDto.getColorSecundario()) && mascotaAproximada.getColorSecundario() != null && mascotaAjenaEncontradaDto.getColorSecundario().equalsIgnoreCase(mascotaAproximada.getColorSecundario().getDescripcion()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaAjenaEncontradaDto.getLocalidad()) && bpmMascota.getLocalidad() != null && mascotaAjenaEncontradaDto.getLocalidad().equalsIgnoreCase(bpmMascota.getLocalidad().getDescripcion()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaAjenaEncontradaDto.getSexo()) && mascotaAproximada.getSexo() != null && mascotaAjenaEncontradaDto.getSexo().equalsIgnoreCase(mascotaAproximada.getSexo().getDescripcion()))
+					coincidenciasCFijas ++;			
+				
+				if (coincidenciasCFijas > 0) {
+					if (mascotaPerdidaRetornoDto == null) {
+						mascotaPerdidaRetornoDto = new MascotaPerdidaDto();
+						mascotaPerdidaRetornoDto = crearMascotaPerdidaRetorno(mascotaAproximada, mascotaAjenaEncontradaDto);		
+					}
+					mascotaPerdidaRetornoDto.setHitsCaracterisMascota(coincidenciasCFijas);						
+				}
+				
+				Integer ranking = (mascotaPerdidaRetornoDto.getHitsCaracteristicasEspeciales() == null ? 0 : mascotaPerdidaRetornoDto.getHitsCaracteristicasEspeciales()) + (mascotaPerdidaRetornoDto.getHitsCaracterisMascota() == null ? 0 : mascotaPerdidaRetornoDto.getHitsCaracterisMascota());
+				mascotaPerdidaRetornoDto.setRanking(ranking);		
+				
+				BigDecimal porcentajeCoincidenciaCFijas = BigDecimal.ZERO;
+				BigDecimal porcentajeCoincidenciaCEspeciales = BigDecimal.ZERO;
+				BigDecimal cien = new BigDecimal(100);
+				porcentajeCoincidenciaCFijas = (new BigDecimal(coincidenciasCFijas).multiply(cien).divide(cantidadDeCaracteristicasFijas.equals(BigDecimal.ZERO) ? BigDecimal.ONE : cantidadDeCaracteristicasFijas , 0, RoundingMode.UP));
+				porcentajeCoincidenciaCEspeciales = (new BigDecimal(coincidenciasCEspeciales).multiply(cien).divide(cantidadDeCaracteristicasEspeciales.equals(BigDecimal.ZERO) ? BigDecimal.ONE : cantidadDeCaracteristicasEspeciales, 0, RoundingMode.UP));
+				
+				//Se retornan únicamente los resultados que tienen >= 50%, ya sean cespeciales o cfijas
+				if (porcentajeCoincidenciaCFijas.intValue() >= 50 || (porcentajeCoincidenciaCEspeciales.intValue() >= 50 && porcentajeCoincidenciaCFijas.intValue() >= 50) && 
+						!mascotaPerdidaRetornoDto.getPropietario().equals(usuarioQueEncuentra.getNombreUsuario()))
+					retorno.add(mascotaPerdidaRetornoDto);						
+			}				
+		}
+		
+		if (retorno.size() == 0) 
+			return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(MensajesValidacion.BUSQUEDA_SIN_RESULTADOS)).build();
+				
+		retorno.sort(MascotaPerdidaDto.HitsDescendenteComparator);
+		return Response.ok().status(Response.Status.OK).entity(retorno).build();
+	}
+
+	private void pasarMascotaAEstadoNormalPrivado(Long idMascotaPerdida, Long idMascota) {
+		MascotaPerdida mascotaPerdida = mascotaPerdidaDao.find(idMascotaPerdida);
+		mascotaPerdida.setBusquedaActiva(false);
+		mascotaPerdidaDao.edit(mascotaPerdida);
+		Mascota mascota = mascotaDao.find(idMascota);
+		String nombreUsuario = mascotaPerdida.getPropietario();
+		Usuario usuario = null;
+		List<Usuario> findByAttribute = usuarioDao.findByAttribute(nombreUsuario, "nombreUsuario");
+		if (findByAttribute != null && findByAttribute.size() > 0) 
+			usuario = findByAttribute.get(0);
+		
+		List<BPMMascota> mascotasDeBPM = bpmMascotaDao.obtenerMascotasDeBPM(idMascota);
+		if (mascotasDeBPM != null && mascotasDeBPM.size() > 0) {
+			for (BPMMascota bpmMascota : mascotasDeBPM) {
+				BPMMascota find = bpmMascotaDao.find(bpmMascota.getId());
+				find.setFechaHasta(new Date());
+				bpmMascotaDao.edit(find);
+			}
+			List<ActividadMascota> actividadesMascota = actividadMascotaDao.findByAttribute("ENCONTRADA", "descripcion");
+			ActividadMascota actividadMascota = null;
+			if (actividadesMascota != null && actividadesMascota.size() > 0) {
+				actividadMascota = actividadesMascota.get(0);
+			}
+			BPMMascota bpmMascotaActAutomatica = new BPMMascota();
+			bpmMascotaActAutomatica.setActividad(actividadMascota);
+			bpmMascotaActAutomatica.setCaracteristicasEspeciales(null);
+			bpmMascotaActAutomatica.setDescripcion(Constantes.ACT_AUTOMATICA_ENCONTRADA);
+			bpmMascotaActAutomatica.setFechaDesde(new Date());
+			bpmMascotaActAutomatica.setFechaHasta(new Date());
+			bpmMascotaActAutomatica.setLatitud(null);
+			bpmMascotaActAutomatica.setLocalidad(null);
+			bpmMascotaActAutomatica.setLongitud(null);
+			bpmMascotaActAutomatica.setMascota(mascota);
+			bpmMascotaActAutomatica.setMascotaPerdida(mascotaPerdida);
+			bpmMascotaActAutomatica.setUsuario(usuario);
+			bpmMascotaDao.persist(bpmMascotaActAutomatica);
+		}
+	}
+
+	private RespuestaEncontradaDto crearRespuestaMascotaEncontrada(String telefonoContacto, String mail, String nombreMascota) {
+		RespuestaEncontradaDto entity;
+		String descripcion = nombreMascota != null ? nombreMascota : "tu mascota";
+		String nombreUsuario = null;
+		if (StringUtils.isNotBlank(mail)) {
+			List<Usuario> usuarios = usuarioDao.findByAttribute(mail, "eMail");
+			if (usuarios != null && usuarios.size() > 0) {
+				Usuario usuario = usuarios.get(0);
+				if (StringUtils.isNotBlank(usuario.getNombre()))
+						nombreUsuario = usuario.getNombre();
+			}						
+		}				
+		String telefono = StringUtils.isNotBlank(telefonoContacto) ? telefonoContacto : "No disponible";
+		String nombre = StringUtils.isNotBlank(nombreUsuario) ? nombreUsuario : "No disponible";
+		entity = new RespuestaEncontradaDto(nombre, mail, telefono, descripcion);
+		return entity;
+	}
+
+	private boolean existenMascotasEnPrimerAproximacion(List<BPMMascota> primerAproximacionMascotaPerdidas) {
+		return primerAproximacionMascotaPerdidas != null && primerAproximacionMascotaPerdidas.size() > 0;
+	}
+	
+	private boolean existenMascotasPropiasEnPrimerAproximacion(List<MascotaPerdida> primerAproximacionMascotasPropiasPerdidas) {
+		return primerAproximacionMascotasPropiasPerdidas != null && primerAproximacionMascotasPropiasPerdidas.size() > 0;
+	}
+
+
+	private MascotaPerdidaDto crearMascotaPerdidaRetorno(Mascota mascotaAproximada, MascotaPerdidaDto mascotaEncontradaDto) {
+		MascotaPerdidaDto mascotaPerdidaRetornoDto;
+		Long id = mascotaEncontradaDto.getId();
+		String nombre = StringUtils.isNotBlank(mascotaAproximada.getNombre()) ? mascotaAproximada.getNombre() : null;
+		String sexo = StringUtils.isNotBlank(mascotaAproximada.getSexo().getDescripcion()) ? mascotaAproximada.getSexo().getDescripcion() : null;
+		String tipo = StringUtils.isNotBlank(mascotaAproximada.getRaza().getTipoMascota().getDescripcion()) ? mascotaAproximada.getRaza().getTipoMascota().getDescripcion() : null;
+		String raza = StringUtils.isNotBlank(mascotaAproximada.getRaza().getDescripcion()) ? mascotaAproximada.getRaza().getDescripcion() : null;
+		String tamanio = StringUtils.isNotBlank(mascotaAproximada.getTamanio().getDescripcion()) ? mascotaAproximada.getTamanio().getDescripcion() : null;
+		String colorPredominante = StringUtils.isNotBlank(mascotaAproximada.getColorPredominante().getDescripcion()) ? mascotaAproximada.getColorPredominante().getDescripcion() : null;
+		String colorSecundario = StringUtils.isNotBlank(mascotaAproximada.getColorSecundario().getDescripcion()) ? mascotaAproximada.getColorSecundario().getDescripcion() : null;
+		String nroChip = StringUtils.isNotBlank(mascotaAproximada.getNroChip()) ? mascotaAproximada.getNroChip() : null;
+		String nroBeacon = StringUtils.isNotBlank(mascotaAproximada.getNroBeacon()) ? mascotaAproximada.getNroBeacon() : null;
+		String propietario = StringUtils.isNotBlank(mascotaAproximada.getPropietario().geteMail()) ? mascotaAproximada.getPropietario().geteMail() : null;
+		Date fechaNacimiento = mascotaAproximada.getFechaNacimiento() != null ? mascotaAproximada.getFechaNacimiento() : null ;
+		Long totalRegistros = null;
+		ArrayList<String> arrayList = new ArrayList<>();
+		arrayList.add(MASCOTAS_GENERICA);
+		List<String> imagenes = obtenerStringDeImagenes(mascotaAproximada).size() > 0 ? obtenerStringDeImagenes(mascotaAproximada) : arrayList;
+		List<String> caracteristicas = null;
+		Long latitud =  mascotaEncontradaDto.getLatitud() != null ? mascotaEncontradaDto.getLatitud() : null;
+		Long longitud = mascotaEncontradaDto.getLongitud() != null ? mascotaEncontradaDto.getLongitud() : null;
+		Integer hitsCaracteristicasEspeciales = 0;
+		Integer hitsCaracteristicasMascota = 0;
+		Integer ranking = 0;
+		String pais = mascotaAproximada.getPropietario().getPais().getNombre();
+		String departamento = StringUtils.isNotBlank(mascotaEncontradaDto.getDepartamento()) ? mascotaEncontradaDto.getDepartamento() : "No disponible";
+		String localidad = StringUtils.isNotBlank(mascotaEncontradaDto.getLocalidad()) ? mascotaEncontradaDto.getLocalidad() : "No disponible";
+		String telefono = StringUtils.isNotBlank(mascotaEncontradaDto.getTelefono()) ? mascotaEncontradaDto.getTelefono() : "No disponible";
+		Long idMascota = mascotaAproximada.getId();
+		mascotaPerdidaRetornoDto = new MascotaPerdidaDto(id, nombre, sexo, tipo, raza, tamanio, colorPredominante, colorSecundario, nroChip, nroBeacon, propietario, fechaNacimiento, 
+				totalRegistros, imagenes, caracteristicas, pais, departamento, localidad, latitud, longitud, hitsCaracteristicasEspeciales, hitsCaracteristicasMascota, ranking, telefono, idMascota);
+		return mascotaPerdidaRetornoDto;
+	}
+	
+	private List<String> obtenerStringDeImagenes(Mascota mascota) {
+		List<String> imagenesString = new ArrayList<>();
+		List<Imagen> imagenes = mascota.getImagenes();
+		for (Imagen imagen : imagenes) {
+			if (StringUtils.isNotBlank(imagen.getImagen()))
+				imagenesString.add(imagen.getImagen());
+		}
+		return imagenesString;
+	}
+	
+
+	@Override
+	public Response pasarMascotaAEstadoEncontrado(Long idMascotaPerdida, Long idMascota) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		if (idMascotaPerdida == null || idMascotaPerdida < 1) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "id de mascota perdida"))).build();
+		MascotaPerdida mascotaPerdida = mascotaPerdidaDao.find(idMascotaPerdida);
+		if (mascotaPerdida == null)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_INCORRECTO, "id de mascota perdida"))).build();
+		
+		if (idMascota == null || idMascota < 1) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "id de mascota"))).build();
+		Mascota mascota = mascotaDao.find(idMascota);
+		if (mascota == null)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_INCORRECTO, "id de mascota"))).build();
+		List<BPMMascota> mascotasDeBPM = bpmMascotaDao.obtenerMascotasDeBPM(idMascota);
+		if (mascotasDeBPM == null || mascotasDeBPM.size() < 1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.MASCOTA_NO_EXTRAVIADA))).build();
+		
+		pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, idMascota);
+		return Response.status(Response.Status.OK).entity(new RespuestaTxtDto(String.format(MensajesValidacion.OPERACION_EXITOSA))).build();
+	}
+
+	@Override
+	public Response buscarMascotaPerdidaEnMascotasPerdidas(MascotaPerdidaDto mascotaPropiaExtraviadaDto) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		// Esto se ejecuta cuando un usuario reporta su mascota propia como extraviada. Se muestran los datos de la persona que la encontró y se envía un mail a la persona que lo encontró con los datos del propietario de la mascota.
+		Long idMascota = mascotaPropiaExtraviadaDto.getIdMascota();
+		if (idMascota == null || idMascota <  1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "id mascota"))).build();
+		
+		Mascota mascota = mascotaDao.find(idMascota);
+		if (mascota == null)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(MensajesValidacion.MASCOTA_INEXISTENTE)).build();
+		
+		String emailDeUsuarioQueEncontro = mascotaPropiaExtraviadaDto.getPropietario();
+		if (StringUtils.isBlank(emailDeUsuarioQueEncontro))
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "e-mail del usuario que encuentra la mascota"))).build();
+		
+		List<Usuario> usuariosPorMail = usuarioDao.findByAttribute(emailDeUsuarioQueEncontro, "eMail");		
+		if (usuariosPorMail == null || usuariosPorMail.size() < 1) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.USUARIO_INEXISTENTE))).build();
+		
+		//Se busca por nro de Beacon
+		MascotaPerdida mascotaPerdida = null;
+		String nroBeacon = mascotaPropiaExtraviadaDto.getNroBeacon();
+		Usuario usuarioQueEncontro = usuariosPorMail.get(0);
+		RespuestaEncontradaDto respuestaEncontradaDto = null;
+		if (nroBeacon != null) {
+			mascotaPerdida = mascotaPerdidaDao.buscarMascotaPropiaPerdidaPorBeacon(nroBeacon);
+			if (mascotaPerdida != null) { 			
+				String telefonoDeContacto = StringUtils.isNotBlank(mascota.getPropietario().getTelefono()) ? mascota.getPropietario().getTelefono() : "No disponible";
+				String destinatario = mascotaPerdida.getPropietario();
+				String nombreMascota = mascota.getNombre();
+				String mailUsuarioQueEncuentra = mascota.getPropietario().geteMail();
+				String textoMensaje = crearTextoParaMailDeMascotaPerdidaEncontrada(mascotaPerdida, mascota);
+				EnvioMailMascotaEncontradaPropiaDto objetoMail = new EnvioMailMascotaEncontradaPropiaDto(destinatario, nombreMascota, mailUsuarioQueEncuentra, telefonoDeContacto, textoMensaje);
+				encolardorMensajes.encolarMensaje(objetoMail);
+				
+				List<Usuario> usuarios = usuarioDao.findByAttribute(mascotaPerdida.getPropietario(), "eMail");	
+				String nombre = usuarios.get(0).getNombre();
+				String mail = usuarios.get(0).geteMail();
+				String telefono = StringUtils.isNotBlank(usuarios.get(0).getTelefono()) ? usuarios.get(0).getTelefono() : "No disponible";				
+				respuestaEncontradaDto = new RespuestaEncontradaDto(nombre, mail, telefono, nombreMascota);
+				
+				Long idMascotaPerdida = mascotaPerdida.getId();
+				pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, idMascota);
+				return Response.ok().status(Response.Status.ACCEPTED).entity(respuestaEncontradaDto).build();
+			}			
+		}
+		
+		//Se busca por nro de chip
+		String numeroChip = mascotaPropiaExtraviadaDto.getNroChip();
+		if (numeroChip != null) {
+			mascotaPerdida = mascotaPerdidaDao.buscarMascotaPropiaPerdidaPorNroChip(numeroChip);
+			if (mascotaPerdida != null) {
+				String telefonoDeContacto = StringUtils.isNotBlank(mascota.getPropietario().getTelefono()) ? mascota.getPropietario().getTelefono() : "No disponible";
+				String destinatario = mascotaPerdida.getPropietario();
+				String nombreMascota = mascota.getNombre();
+				String mailUsuarioQueEncuentra = mascota.getPropietario().geteMail();
+				String textoMensaje = crearTextoParaMailDeMascotaPerdidaEncontrada(mascotaPerdida, mascota);
+				EnvioMailMascotaEncontradaPropiaDto objetoMail = new EnvioMailMascotaEncontradaPropiaDto(destinatario, nombreMascota, mailUsuarioQueEncuentra, telefonoDeContacto, textoMensaje);
+				encolardorMensajes.encolarMensaje(objetoMail);
+				
+				List<Usuario> usuarios = usuarioDao.findByAttribute(mascotaPerdida.getPropietario(), "eMail");	
+				String nombre = usuarios.get(0).getNombre();
+				String mail = usuarios.get(0).geteMail();
+				String telefono = StringUtils.isNotBlank(usuarios.get(0).getTelefono()) ? usuarios.get(0).getTelefono() : "No disponible";				
+				respuestaEncontradaDto = new RespuestaEncontradaDto(nombre, mail, telefono, nombreMascota);
+				
+				respuestaEncontradaDto = crearRespuestaMascotaEncontrada(mascotaPropiaExtraviadaDto.getTelefono(), mascotaPropiaExtraviadaDto.getPropietario(), mascotaPerdida.getNombre());
+				Long idMascotaPerdida = mascotaPerdida.getId();
+				pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, idMascota);
+				return Response.ok().status(Response.Status.ACCEPTED).entity(respuestaEncontradaDto).build();
+			}			
+		}
+		
+		//Se realiza la primer busqueda filtro
+		String tipoMascota = mascotaPropiaExtraviadaDto.getTipo();
+		String colorPredominanteMascota = mascotaPropiaExtraviadaDto.getColorPredominante();
+		List<MascotaPerdida> primerAproximacionMascotasPropiasPerdidas = mascotaPerdidaDao.buscarPrimerAproximacionMascotaPerdidaPropia(tipoMascota, colorPredominanteMascota);
+		
+		List<String> caracteristicasMascotaEncontrada = mascotaPropiaExtraviadaDto.getCaracteristicas();
+		int cantidadDeCaracetisticasEspecialesMascotaEncontrada = caracteristicasMascotaEncontrada == null ? 0 : caracteristicasMascotaEncontrada.size();
+		List<MascotaPerdidaDto> retorno = new ArrayList<>();
+		//Se iteran las caracteristicas especiales de las mascotas peridas en el BPM con las caracteristicas especiales
+		//de la mascota encontrada. Se arma un porcentaje basado en las coincidencias de las caracteristicas especiales
+		MascotaPerdidaDto mascotaPerdidaRetornoDto = null;
+		MascotaPerdida mascotaAproximada = null;
+		if (existenMascotasPropiasEnPrimerAproximacion(primerAproximacionMascotasPropiasPerdidas)) {
+			for (MascotaPerdida bpmMascota : primerAproximacionMascotasPropiasPerdidas) {
+				mascotaPerdidaRetornoDto = null;
+				int coincidenciasCEspeciales = 0;
+				int coincidenciasCFijas = 0;
+				List<String> caracteristicasEspecialesMacotaPerdida = bpmMascota.getCaracteristicasEspeciales();
+				BigDecimal cantidadDeCaracteristicasEspeciales = new BigDecimal(0);
+				if (caracteristicasEspecialesMacotaPerdida != null && caracteristicasEspecialesMacotaPerdida.size() > 0 && cantidadDeCaracetisticasEspecialesMascotaEncontrada > 0) {
+					cantidadDeCaracteristicasEspeciales = new BigDecimal(caracteristicasEspecialesMacotaPerdida.size());
+					for (String caracteristicaEspecialMascotaPerdida : caracteristicasEspecialesMacotaPerdida) {
+						for (String caracteristicaString : caracteristicasMascotaEncontrada) {							
+							if (caracteristicaEspecialMascotaPerdida.equalsIgnoreCase(caracteristicaString)) {
+								coincidenciasCEspeciales++;
+							}
+						}
+					}
+				}
+				
+				mascotaAproximada = mascotaPerdidaDao.find(bpmMascota.getId());
+				//Se contabilizan los hits de las caracterísitcas especiales
+				if (coincidenciasCEspeciales > 0) {
+					mascotaPerdidaRetornoDto = crearMascotaPropiaPerdidaRetorno(mascotaAproximada, mascotaPropiaExtraviadaDto);
+					mascotaPerdidaRetornoDto.setHitsCaracteristicasEspeciales((coincidenciasCEspeciales * 100) / (cantidadDeCaracetisticasEspecialesMascotaEncontrada < 1 ? 1 : cantidadDeCaracetisticasEspecialesMascotaEncontrada));
+				}
+				
+				//Se contabilizan los hits de las caracterísitcas fijas de la mascota
+				BigDecimal cantidadDeCaracteristicasFijas = new BigDecimal(6);
+				if (StringUtils.isNotBlank(mascotaPropiaExtraviadaDto.getRaza()) && mascotaAproximada.getRaza() != null && mascotaPropiaExtraviadaDto.getRaza().equalsIgnoreCase(mascotaAproximada.getRaza()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaPropiaExtraviadaDto.getTamanio()) && mascotaAproximada.getTamanio() != null && (mascotaPropiaExtraviadaDto.getTamanio().equalsIgnoreCase(mascotaAproximada.getTamanio()) || mascotaPropiaExtraviadaDto.getTamanio().equalsIgnoreCase("MEDIANO")))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaPropiaExtraviadaDto.getNombre()) && mascotaAproximada.getNombre() != null && mascotaPropiaExtraviadaDto.getNombre().equalsIgnoreCase(mascotaAproximada.getNombre()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaPropiaExtraviadaDto.getColorSecundario()) && mascotaAproximada.getColorSecundario() != null && mascotaPropiaExtraviadaDto.getColorSecundario().equalsIgnoreCase(mascotaAproximada.getColorSecundario()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaPropiaExtraviadaDto.getLocalidad()) && bpmMascota.getLocalidad() != null && mascotaPropiaExtraviadaDto.getLocalidad().equalsIgnoreCase(bpmMascota.getLocalidad()))
+					coincidenciasCFijas ++;
+				if (StringUtils.isNotBlank(mascotaPropiaExtraviadaDto.getSexo()) && mascotaAproximada.getSexo() != null && mascotaPropiaExtraviadaDto.getSexo().equalsIgnoreCase(mascotaAproximada.getSexo()))
+					coincidenciasCFijas ++;			
+				
+				if (coincidenciasCFijas > 0) {
+					if (mascotaPerdidaRetornoDto == null)
+						mascotaPerdidaRetornoDto = crearMascotaPropiaPerdidaRetorno(mascotaAproximada, mascotaPropiaExtraviadaDto);							
+					mascotaPerdidaRetornoDto.setHitsCaracterisMascota(coincidenciasCFijas);						
+				}
+				
+				Integer ranking = (mascotaPerdidaRetornoDto.getHitsCaracteristicasEspeciales()) + (mascotaPerdidaRetornoDto.getHitsCaracterisMascota());
+				mascotaPerdidaRetornoDto.setRanking(ranking);		
+				
+				BigDecimal porcentajeCoincidenciaCFijas = BigDecimal.ZERO;
+				BigDecimal porcentajeCoincidenciaCEspeciales = BigDecimal.ZERO;
+				BigDecimal cien = new BigDecimal(100);
+				porcentajeCoincidenciaCFijas = (new BigDecimal(coincidenciasCFijas).multiply(cien).divide(cantidadDeCaracteristicasFijas, 0, RoundingMode.UP));
+				porcentajeCoincidenciaCEspeciales = (new BigDecimal(coincidenciasCEspeciales).multiply(cien).divide(cantidadDeCaracteristicasEspeciales.intValue() == 0 ? new BigDecimal(1) : cantidadDeCaracteristicasEspeciales, 0, RoundingMode.UP));
+				
+				//Se retornan únicamente los resultados que tienen >= 50% en fijas, en especiales solo si > 50 y las fijas también
+				if (porcentajeCoincidenciaCFijas.intValue() >= 50 || (porcentajeCoincidenciaCEspeciales.intValue() >= 50 && porcentajeCoincidenciaCFijas.intValue() >= 50) && 
+						!mascotaPerdidaRetornoDto.getPropietario().equals(usuarioQueEncontro.getNombreUsuario()))
+					retorno.add(mascotaPerdidaRetornoDto);
+			}				
+		}
+		
+		if (retorno.size() == 0) 
+			return Response.ok().status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(MensajesValidacion.BUSQUEDA_SIN_RESULTADOS)).build();
+				
+		retorno.sort(MascotaPerdidaDto.HitsDescendenteComparator);
+		return Response.ok().status(Response.Status.OK).entity(retorno).build();
+	}
+
+	private String crearTextoParaMailDeMascotaPerdidaEncontrada(MascotaPerdida mascotaPerdida, Mascota mascota) {
+		Date fecha = mascotaPerdida.getFecha() != null ? mascotaPerdida.getFecha() : null;
+		StringBuilder sb = new StringBuilder("La mascota que encontraste ");
+		if (fecha != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("'el' EEEEEEEEE dd 'de' MMMMM 'de' yyyy 'a las 'HH:mm ");
+			sb.append(sdf.format(fecha).toString());
+		}
+		sb.append(" está siendo buscada por sus dueños. \nAquí te proporcionamos los datos para que te contactes con ellos.\n");
+		sb.append("\nNombre: ");
+		sb.append(mascota.getPropietario().getNombre());
+		sb.append("\n");
+		sb.append("\nMail : ");
+		sb.append(mascota.getPropietario().geteMail());
+		sb.append("\n");
+		sb.append("\nTeléfono: ");
+		sb.append(mascota.getPropietario().getTelefono());
+		sb.append("\n\n");
+		sb.append("\n \nGracias por colaborar con la comunidad RUFFO y hacer posible un final feliz!");
+		
+		return sb.toString();
+	}
+
+	private MascotaPerdidaDto crearMascotaPropiaPerdidaRetorno(MascotaPerdida mascotaAproximada, MascotaPerdidaDto mascotaEncontradaDto) {
+		MascotaPerdidaDto mascotaPerdidaRetornoDto;
+		Long id = mascotaEncontradaDto.getId();
+		String nombre = StringUtils.isNotBlank(mascotaAproximada.getNombre()) ? mascotaAproximada.getNombre() : null;
+		String sexo = StringUtils.isNotBlank(mascotaAproximada.getSexo()) ? mascotaAproximada.getSexo() : null;
+		String tipo = StringUtils.isNotBlank(mascotaAproximada.getTipoMascota()) ? mascotaAproximada.getTipoMascota() : null;
+		String raza = StringUtils.isNotBlank(mascotaAproximada.getRaza()) ? mascotaAproximada.getRaza() : null;
+		String tamanio = StringUtils.isNotBlank(mascotaAproximada.getTamanio()) ? mascotaAproximada.getTamanio() : null;
+		String colorPredominante = StringUtils.isNotBlank(mascotaAproximada.getColorPredominante()) ? mascotaAproximada.getColorPredominante() : null;
+		String colorSecundario = StringUtils.isNotBlank(mascotaAproximada.getColorSecundario()) ? mascotaAproximada.getColorSecundario() : null;
+		String nroChip = StringUtils.isNotBlank(mascotaAproximada.getNroChip()) ? mascotaAproximada.getNroChip() : null;
+		String nroBeacon = StringUtils.isNotBlank(mascotaAproximada.getNroBeacon()) ? mascotaAproximada.getNroBeacon() : null;
+		String propietario = StringUtils.isNotBlank(mascotaAproximada.getPropietario()) ? mascotaAproximada.getPropietario() : null;
+		Date fechaNacimiento = null;
+		Long totalRegistros = null;
+		ArrayList<String> arrayList = new ArrayList<>();
+		arrayList.add(MASCOTAS_GENERICA);
+		List<String> imagenes = obtenerStringDeImagenesMascotaPerdida(mascotaAproximada).size() > 0 ? obtenerStringDeImagenesMascotaPerdida(mascotaAproximada) : arrayList;
+		List<String> caracteristicas = null;
+		Long latitud =  mascotaEncontradaDto.getLatitud() != null ? mascotaEncontradaDto.getLatitud() : null;
+		Long longitud = mascotaEncontradaDto.getLongitud() != null ? mascotaEncontradaDto.getLongitud() : null;
+		Integer hitsCaracteristicasEspeciales = 0;
+		Integer hitsCaracteristicasMascota = 0;
+		Integer ranking = 0;
+		String pais = mascotaAproximada.getPais();
+		String departamento = StringUtils.isNotBlank(mascotaEncontradaDto.getDepartamento()) ? mascotaEncontradaDto.getDepartamento() : "No disponible";
+		String localidad = StringUtils.isNotBlank(mascotaEncontradaDto.getLocalidad()) ? mascotaEncontradaDto.getLocalidad() : "No disponible";
+		String telefono = StringUtils.isNotBlank(mascotaEncontradaDto.getTelefono()) ? mascotaEncontradaDto.getTelefono() : "No disponible";
+		Long idMascota = mascotaAproximada.getId();
+		mascotaPerdidaRetornoDto = new MascotaPerdidaDto(id, nombre, sexo, tipo, raza, tamanio, colorPredominante, colorSecundario, nroChip, nroBeacon, propietario, fechaNacimiento, 
+				totalRegistros, imagenes, caracteristicas, pais, departamento, localidad, latitud, longitud, hitsCaracteristicasEspeciales, hitsCaracteristicasMascota, ranking, telefono, idMascota);
+		return mascotaPerdidaRetornoDto;
+	}
+	
+	private List<String> obtenerStringDeImagenesMascotaPerdida(MascotaPerdida mascotaPerdida) {
+		List<String> imagenesString = new ArrayList<>();
+		List<String> imagenes = mascotaPerdida.getImagenes();
+		for (String imagen : imagenes) {
+			if (StringUtils.isNotBlank(imagen))
+				imagenesString.add(imagen);
+		}
+		return imagenesString;
+	}
+
+	@Override
+	public Response obtenerMascotasEncontradasDeUsuario(String nombreUsuario) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		if (StringUtils.isBlank(nombreUsuario))
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "nombre de usuario"))).build();
+		
+		List<MascotaPerdida> mascotasEncontradasDeUsuario = mascotaPerdidaDao.findByAttribute(nombreUsuario, "propietario");
+		List<MascotaPerdidaDto> mascotasEncontradasDeUsuarioDto = new ArrayList<>();
+		MascotaPerdidaDto mascotaPerdidaDto = null;
+		if (mascotasEncontradasDeUsuario != null && mascotasEncontradasDeUsuario.size() > 0) {
+			for (MascotaPerdida mascotaPerdida : mascotasEncontradasDeUsuario) {
+				List<String> imagenesMascotaPerdida = mascotaPerdida.getImagenes();
+				if (imagenesMascotaPerdida.size() > 0)
+					imagenesMascotaPerdida = mascotaPerdida.getImagenes();
+				else {
+					imagenesMascotaPerdida = new ArrayList<>();
+					imagenesMascotaPerdida.add(PATA_PNG);
+				}
+					
+				List<String> caracteristicasEspecialesMascotaPerdida = mascotaPerdida.getCaracteristicasEspeciales();
+				caracteristicasEspecialesMascotaPerdida.size();
+				Long idMascotaPerdida = mascotaPerdida.getId();
+				String nombreMascotaPerdida = mascotaPerdida.getNombre();
+				String sexoMascotaPerdida = mascotaPerdida.getSexo();
+				String tipoMascotaMascotaPerdida = mascotaPerdida.getTipoMascota();
+				String razaMascotaPerdida = mascotaPerdida.getRaza();
+				String tamanioMascotaPerdida = mascotaPerdida.getTamanio();
+				String colorPredominanteMascotaPerdida = mascotaPerdida.getColorPredominante();
+				String colorSecundarioMascotaPerdida = mascotaPerdida.getColorSecundario();
+				String nroChipMascotaPerdida = mascotaPerdida.getNroChip();
+				String nroBeaconMascotaPerdida = mascotaPerdida.getNroBeacon();
+				String propietarioMascotaPerdida = mascotaPerdida.getPropietario();
+				String paisMascotaPerdida = mascotaPerdida.getPais();
+				String departamentoMascotaPerdida = mascotaPerdida.getDepartamento();
+				String localidadMascotaPerdida = mascotaPerdida.getLocalidad();
+				Long latitudMascotaPerdida = mascotaPerdida.getLatitud();
+				Long longitudMascotaPerdida = mascotaPerdida.getLongitud();
+				String telefonoMascotaPerdida = mascotaPerdida.getTelefono();
+				mascotaPerdidaDto = new MascotaPerdidaDto(idMascotaPerdida, nombreMascotaPerdida, sexoMascotaPerdida, tipoMascotaMascotaPerdida, razaMascotaPerdida, tamanioMascotaPerdida, 
+						colorPredominanteMascotaPerdida, colorSecundarioMascotaPerdida, nroChipMascotaPerdida, nroBeaconMascotaPerdida, 
+						propietarioMascotaPerdida, null, null, imagenesMascotaPerdida, caracteristicasEspecialesMascotaPerdida, paisMascotaPerdida, 
+						departamentoMascotaPerdida, localidadMascotaPerdida, latitudMascotaPerdida, longitudMascotaPerdida, null, null, null, telefonoMascotaPerdida, null);
+				mascotaPerdidaDto.setEstado(mascotaPerdida.getBusquedaActiva() ? "EXTRAVIADA" : "ENCONTRADA");
+				mascotasEncontradasDeUsuarioDto.add(mascotaPerdidaDto);
+			}			
+		}
+		if (mascotasEncontradasDeUsuarioDto != null && mascotasEncontradasDeUsuarioDto.size() > 0)
+			mascotasEncontradasDeUsuarioDto.sort(Comparator.comparing(MascotaPerdidaDto::getEstado).reversed());
+		return Response.ok().status(Response.Status.OK).entity(mascotasEncontradasDeUsuarioDto).build();
+	}
+
+	@Override
+	public Response realizarLecturaDeNroChipNroBeacon(BusquedaBeaconParametroDto busquedaBeaconParametroDto) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		List<String> nrosBeacons = busquedaBeaconParametroDto.getNroBeacon();
+		String nroChip = busquedaBeaconParametroDto.getNroChip();
+		if ((nrosBeacons == null || nrosBeacons.size() < 1) &&  StringUtils.isBlank(nroChip))
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.SIN_RESULTADOS_DE_BUSQUEDA))).build();
+		
+		String nombreUsuario = busquedaBeaconParametroDto.getNombreUsuario();
+		List<Usuario> usuarios = usuarioDao.findByAttribute(nombreUsuario, "nombreUsuario");
+		if (usuarios == null || usuarios.size() < 1)
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(MensajesValidacion.USUARIO_INEXISTENTE)).build();
+		
+		Usuario usuarioQueEncontro = usuarios.get(0);	
+		List<RespuestaEncontradaDto> mascotasPerdidas = new ArrayList<>();
+		List<MascotaPerdidaDto> mascotasNoPerdidas = new ArrayList<>();
+		List<MascotaPerdidaDto> mascotasNoPerdidasNroChip = new ArrayList<>();
+		Mascota mascota = null;
+		RespuestaEncontradaDto entity = null;
+		MascotaPerdida mascotaPerdida = null;
+		Long idMascotaPerdida = null;
+		MascotaPerdidaDto m = null;
+		
+		if (nrosBeacons != null && nrosBeacons.size() > 0) {
+			for (String nroBeacon : nrosBeacons) {
+				List<Mascota> mascotas = mascotaDao.findByAttribute(nroBeacon, "nroBeacon");
+				if (mascotas != null && mascotas.size() > 0) {
+					mascota = mascotas.get(0);
+					if (!mascota.getPropietario().getNombreUsuario().equalsIgnoreCase(usuarioQueEncontro.getNombreUsuario())) {
+						List<BPMMascota> obtenerMascotasDeBPM = bpmMascotaDao.MascotasExtraviadasDeBPMPorActividad(mascota.getId(), "EXTRAVIADA");
+						if (obtenerMascotasDeBPM != null && obtenerMascotasDeBPM.size() > 0) {					
+							String telefonoDeContacto = StringUtils.isNotBlank(usuarioQueEncontro.getTelefono()) ? usuarioQueEncontro.getTelefono() : "No disponible";
+							mascotaPerdida = new MascotaPerdida(null, mascota.getNombre(), mascota.getSexo().getDescripcion(), mascota.getRaza().getDescripcion(), mascota.getTamanio().getDescripcion(), mascota.getColorPredominante().getDescripcion(), mascota.getColorSecundario().getDescripcion(), mascota.getNroChip(), mascota.getNroBeacon(), nombreUsuario, null, null, null, null, null, telefonoDeContacto, null, null, true, mascota.getRaza().getTipoMascota().getDescripcion(), new Date());
+							mascotaPerdidaDao.persist(mascotaPerdida);
+							idMascotaPerdida = mascotaPerdida.getId();	
+							
+							String destinatario = mascota.getPropietario().geteMail();
+							String nombreMascota = mascota.getNombre();
+							String mailUsuarioQueEncuentra = usuarioQueEncontro.geteMail();
+							EnvioMailMascotaEncontradaDto objetoMail = new EnvioMailMascotaEncontradaDto(destinatario, nombreMascota, mailUsuarioQueEncuentra, telefonoDeContacto);
+							encolardorMensajes.encolarMensaje(objetoMail);
+							
+							entity = crearRespuestaMascotaEncontrada(mascota.getPropietario().getTelefono(), mascota.getPropietario().geteMail(), mascota.getNombre());
+							Long idMascota = mascota.getId();
+							pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, idMascota);
+							List<String> imagenesString = obtenerStringDeImagenes(mascota);
+							if (imagenesString != null && imagenesString.size() > 0) 
+								entity.setImagenes(imagenesString.get(0));
+							mascotasPerdidas.add(entity);						
+						}
+						else {
+							m = new MascotaPerdidaDto();
+							m.setNroBeacon(nroBeacon);
+							String imagen = mascota.getImagenes() != null && mascota.getImagenes().size() > 0 ? mascota.getImagenes().get(0).getImagen() : MASCOTAS_GENERICA;
+							List<String> imagenes = new ArrayList<>();
+							imagenes.add(imagen);
+							m.setImagenes(imagenes);
+							mascotasNoPerdidas.add(m);
+						}						
+					}
+				}
+				else {
+					m = new MascotaPerdidaDto();
+					m.setNroBeacon(nroBeacon);
+					String imagen = MASCOTAS_GENERICA;
+					List<String> imagenes = new ArrayList<>();
+					imagenes.add(imagen);
+					m.setImagenes(imagenes);
+					mascotasNoPerdidas.add(m);		
+				}
+			}			
+		}
+		else {
+			if (StringUtils.isNotBlank(nroChip)) {
+				List<Mascota> mascotas = mascotaDao.findByAttribute(nroChip, "nroChip");
+				if (mascotas != null && mascotas.size() > 0) {
+					mascota = mascotas.get(0);
+					if (!mascota.getPropietario().getNombreUsuario().equalsIgnoreCase(usuarioQueEncontro.getNombreUsuario())) {
+						List<BPMMascota> obtenerMascotasDeBPM = bpmMascotaDao.MascotasExtraviadasDeBPMPorActividad(mascota.getId(), "EXTRAVIADA");
+						if (obtenerMascotasDeBPM != null && obtenerMascotasDeBPM.size() > 0) {					
+							String telefonoDeContacto = StringUtils.isNotBlank(usuarioQueEncontro.getTelefono()) ? usuarioQueEncontro.getTelefono() : "No disponible";
+							mascotaPerdida = new MascotaPerdida(null, mascota.getNombre(), mascota.getSexo().getDescripcion(), mascota.getRaza().getDescripcion(), mascota.getTamanio().getDescripcion(), mascota.getColorPredominante().getDescripcion(), mascota.getColorSecundario().getDescripcion(), mascota.getNroChip(), mascota.getNroBeacon(), nombreUsuario, null, null, null, null, null, telefonoDeContacto, null, null, true, mascota.getRaza().getTipoMascota().getDescripcion(), new Date());
+							mascotaPerdidaDao.persist(mascotaPerdida);
+							idMascotaPerdida = mascotaPerdida.getId();	
+							
+							String destinatario = mascota.getPropietario().geteMail();
+							String nombreMascota = mascota.getNombre();
+							String mailUsuarioQueEncuentra = usuarioQueEncontro.geteMail();
+							EnvioMailMascotaEncontradaDto objetoMail = new EnvioMailMascotaEncontradaDto(destinatario, nombreMascota, mailUsuarioQueEncuentra, telefonoDeContacto);
+							encolardorMensajes.encolarMensaje(objetoMail);
+							
+							entity = crearRespuestaMascotaEncontrada(mascota.getPropietario().getTelefono(), mascota.getPropietario().geteMail(), mascota.getNombre());
+							Long idMascota = mascota.getId();
+							pasarMascotaAEstadoNormalPrivado(idMascotaPerdida, idMascota);
+							List<String> imagenesString = obtenerStringDeImagenes(mascota);
+							if (imagenesString != null && imagenesString.size() > 0) 
+								entity.setImagenes(imagenesString.get(0));
+							mascotasPerdidas.add(entity);						
+						}						
+					}
+				}
+			}			
+		}		
+		ResultadoLecturaBeaconDto resultado = new ResultadoLecturaBeaconDto(mascotasPerdidas, mascotasNoPerdidas, mascotasNoPerdidasNroChip);
+		return Response.ok().status(Response.Status.OK).entity(resultado).build();
+	}
+
+	@Override
+	public Response desactivarBusquedaDeMascota(Long idMascotaPerdida) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		if (idMascotaPerdida == null && idMascotaPerdida < 1) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "el id de la mascota extraviada"))).build();
+		
+		MascotaPerdida mascotaPerdida = mascotaPerdidaDao.find(idMascotaPerdida);
+		if (mascotaPerdida == null) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(MensajesValidacion.MASCOTA_PERDIDA_INEXISTENTE)).build();
+		
+		mascotaPerdida.setBusquedaActiva(false);
+		mascotaPerdidaDao.edit(mascotaPerdida);
+		return Response.ok().status(Response.Status.OK).entity(MensajesValidacion.OPERACION_EXITOSA).build();
+	}
+	
+	@Override
+	public Response desactivarBusquedaDeMascotaPorObjeto(MascotaPerdidaDto mascotaPerdidaDto) throws SeguridadChequeoException, PrivilegiosChequeoException {
+		Long idMascotaPerdida = mascotaPerdidaDto.getId();
+		if (idMascotaPerdida == null && idMascotaPerdida < 1) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(String.format(MensajesValidacion.PARAMETRO_REQUERIDO, "el id de la mascota extraviada"))).build();
+		
+		MascotaPerdida mascotaPerdida = mascotaPerdidaDao.find(idMascotaPerdida);
+		if (mascotaPerdida == null) 
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new RespuestaTxtDto(MensajesValidacion.MASCOTA_PERDIDA_INEXISTENTE)).build();
+		
+		mascotaPerdida.setBusquedaActiva(false);
+		mascotaPerdidaDao.edit(mascotaPerdida);
+		return Response.ok().status(Response.Status.OK).entity(MensajesValidacion.OPERACION_EXITOSA).build();
+	}
+}

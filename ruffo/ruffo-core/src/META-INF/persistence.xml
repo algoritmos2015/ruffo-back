@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+<persistence-unit name="ruffo" transaction-type="JTA">
+		<jta-data-source>java:jboss/datasources/ruffo</jta-data-source>
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<class>com.ruffo.entidades.Persona</class>
+		<class>com.ruffo.entidades.Usuario</class>
+		<class>com.ruffo.entidades.Rol</class>
+		<class>com.ruffo.entidades.Sesion</class>
+		<class>com.ruffo.entidades.BPMMascota</class>
+		<class>com.ruffo.entidades.Tamanio</class>
+		<class>com.ruffo.entidades.ActividadMascota</class>
+		<class>com.ruffo.entidades.CaracteristicaEspecial</class>
+		<class>com.ruffo.entidades.Color</class>
+		<class>com.ruffo.entidades.Mascota</class>
+		<class>com.ruffo.entidades.Pais</class>
+		<class>com.ruffo.entidades.Raza</class>
+		<class>com.ruffo.entidades.Sexo</class>
+		<class>com.ruffo.entidades.TipoMascota</class>
+		<class>com.ruffo.entidades.TipoUsuario</class>
+		<class>com.ruffo.entidades.SexoMascota</class>
+		<class>com.ruffo.entidades.MascotaPerdida</class>
+		<class>com.ruffo.entidades.Imagen</class>
+		<class>com.ruffo.entidades.ParteMascota</class>
+		<class>com.ruffo.entidades.Departamento</class>
+		<class>com.ruffo.entidades.Localidad</class>
+		<class>com.ruffo.entidades.HistoriaClinica</class>
+		<class>com.ruffo.entidades.ConsultaClinica</class>
+		<properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+            <property name="hibernate.show_sql" value="true" />
+<!--        <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.show_sql" value="true" />
+
+        </properties>
+    </persistence-unit>
+</persistence>
+
+<!-- <persistence-unit name="Rejuflo"> -->
+<!--         <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
+<!--         <class>proj.Persona</class> -->
+<!--         <class>proj.Pago</class> -->
+<!--         <properties> -->
+<!--             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /> -->
+<!--             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test" /> -->
+<!--             <property name="javax.persistence.jdbc.user" value="root" /> -->
+<!--             <property name="javax.persistence.jdbc.password" value="root" /> -->
+
+<!--             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
+<!--             <property name="hibernate.show_sql" value="true" /> -->
+<!--             <property name="hibernate.hbm2ddl.auto" value="create" /> -->
+<!--             <property name="hibernate.format_sql" value="false" /> -->
+<!--         </properties> -->
+<!--     </persistence-unit> -->

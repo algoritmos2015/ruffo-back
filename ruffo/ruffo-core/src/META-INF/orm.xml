@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+	
+	<named-query name="Usuario.obtenerUsuarioPorNombreYClave">
+		<description>Esta es una consulta JPQL, obtiene un usuatio por nombre y clave.</description>
+		<query>SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario and u.clave = :clave</query>
+	</named-query>
+	
+	<named-query name="Usuario.obtenerRolesDeUsuario">
+		<description>Obtiene los nombres de los roles del usuario</description>
+		<query>SELECT u.roles FROM Usuario u WHERE u.nombre = :nombre</query>
+	</named-query>
+	
+	<named-query name="Usuario.obtenerMascotasDeUsuario">
+		<description>Obtiene las mascotas de un usuario dado</description>
+		<query>SELECT u.mascotas FROM Usuario u where u.id = :idUsuario</query>
+	</named-query>
+	
+	<named-query name="Sesion.obtenerSesionesActivaDeUsuario">
+		<description>Obtiene las sesiones activas del usuario</description>
+		<query>SELECT s FROM Sesion s WHERE s.usuario.id = :idUsuario and s.activa = :activa</query>
+	</named-query>
+	
+	<named-query name="Mascota.obtenerColorPorTipo">
+		<description>Obtiene los colores por tipo (Primario o Secundario)</description>
+		<query>SELECT c from Color c where c.tipoColor = :tipoColor</query>
+	</named-query>
+	
+	<named-query name="Mascota.obtenerColorPorTipoYDescripcion">
+		<description>Obtiene el color por tipo (Primario o Secundario) y su descripcion</description>
+		<query>SELECT c from Color c where c.tipoColor = :tipoColor and descripcion = :descripcion</query>
+	</named-query>
+	
+	<named-query name="Mascota.obtenerMascotaPorNombreUsuario">
+		<description>Obtiene las mascotas de un usuario por nombre de usuario</description>
+		<query>SELECT m from Mascota m where m.propietario.nombreUsuario = :nombreUsuario</query>
+	</named-query>
+	
+	<named-query name="Mascota.obtenerMascotasPorIdUsuario">
+		<description>Obtiene las mascotas de un usuario por id de usuario</description>
+		<query>SELECT m from Mascota m where m.propietario.id = :idUsuario</query>
+	</named-query>
+	
+	<named-query name="TipoMascota.obtenerTiposDeMascotas">
+		<description>Obtiene los tipos de mascotas</description>
+		<query>SELECT distinct t from TipoMascota t</query>
+	</named-query>
+	
+	<named-query name="Mascota.obtenerRazasPorTipoDeMascota">
+		<description>Obtiene las razas por tipos de mascotas</description>
+		<query>SELECT r from Raza r inner join r.tipoMascota t where t.descripcion = :tipoMascota</query>
+	</named-query>
+	
+	<named-query name="Mascota.obtenerRazasDeMascotasAutocompletar">
+		<description>Obtiene las razas por tipos de mascotas</description>
+		<query>SELECT r from Raza r inner join r.tipoMascota t where t.descripcion = :tipoMascota and r.descripcion like :texto</query>
+	</named-query>
+	
+	<named-query name="Mascota.obtenerCaracteristicasEspecialesDeMascotasPorParte">
+		<description>Obtiene las caracteristicas especiales por parte de la mascota</description>
+		<query>SELECT c from CaracteristicaEspecial  c inner join c.parteMascota pm where pm.descripcion = :parte</query>
+	</named-query>
+	
+	<named-query name="Mascota.buscarMascotaPerdidaPorNroBeacon">
+		<description>Retorna la mascota que coincida con la búsqueda</description>
+		<query>SELECT bpm.mascota from BPMMascota bpm 
+		where bpm.mascota.nroBeacon = :nroBeacon and bpm.fechaHasta is null 
+		and bpm.actividad.id = (select a.id from ActividadMascota a where a.descripcion = 'EXTRAVIADA')</query>
+	</named-query>
+	
+	<named-query name="Mascota.estadoUltimoDeMascotaPorIdMascota">
+		<description>Retorna el estado actual de la mascota</description>
+		<query>SELECT bpm.actividad.descripcion from BPMMascota bpm 
+			where bpm.mascota.id = :idMascota order by bpm.id desc </query>
+	</named-query>
+	
+	<named-query name="MascotaPerdida.buscarMascotaPropiaPerdidaPorBeacon">
+		<description>Retorna la mascota perdida que coincida con la búsqueda</description>
+		<query>SELECT mp from MascotaPerdida mp where mp.busquedaActiva = true and mp.nroBeacon = :nroBeacon</query>
+	</named-query>
+	
+	<named-query name="MascotaPerdida.buscarMascotaPropiaPerdidaPorNroChip">
+		<description>Retorna la mascota perdida que coincida con la búsqueda</description>
+		<query>SELECT mp from MascotaPerdida mp where mp.busquedaActiva = true and mp.nroChip = :nroChip</query>
+	</named-query>
+	
+	<named-query name="Mascota.buscarMascotaPerdidaPorNroChip">
+		<description>Retorna la mascota que coincida con la búsqueda</description>
+		<query>SELECT bpm.mascota from BPMMascota  bpm inner join bpm.mascota m where m.nroChip = :nroChip and bpm.fechaHasta = null 
+		and bpm.actividad.id = (select a.id from ActividadMascota a where a.descripcion = 'EXTRAVIADA')</query>
+	</named-query>
+	
+		<named-query name="Mascota.buscarMascotaPerdidaPorIdMascota">
+		<description>Retorna la mascota que coincida con la búsqueda</description>
+		<query>SELECT bpm.mascota from BPMMascota  bpm inner join bpm.mascota m where m.id = :idMascota and bpm.fechaHasta = null 
+		and bpm.actividad.id = (select a.id from ActividadMascota a where a.descripcion = 'EXTRAVIADA')</query>
+	</named-query>
+
+	<named-query name="Mascota.buscarPrimerAproximacionMascotaPerdida">
+		<description>Retorna la primer aproximacion de busqueda de mascota perdida</description>
+		<query>SELECT bpm 
+		from BPMMascota  bpm 
+		inner join bpm.mascota m 
+		where bpm.fechaHasta IS NULL 
+		and bpm.actividad.id = (select a.id from ActividadMascota a where a.descripcion = 'EXTRAVIADA')
+		and m.raza.tipoMascota.id = (select t from TipoMascota t where t.descripcion = :tipoMascota)
+		and m.colorPredominante.id = (select c.id from Color c where c.tipoColor = 'P' and c.descripcion = :colorPredominante) 
+		</query>
+	</named-query>
+	
+	<named-query name="MascotaPerdida.buscarPrimerAproximacionMascotaPerdidaPropia">
+		<description>Retorna la primer aproximacion de busqueda de mascota perdida propia</description>
+		<query>select mp from MascotaPerdida mp 
+				where mp.busquedaActiva = true and mp.tipoMascota = :tipoMascota and 
+				mp.colorPredominante =   
+				(select c.descripcion from Color c where c.tipoColor = 'P' and c.descripcion = :colorPredominante)
+		</query>
+	</named-query>
+	
+	<named-query name="Bpm.existeMascotaEnActividad">
+		<description>Retorna el id de mascota que coincida con la búsqueda</description>
+		<query>
+			select bpm.mascota.id 
+			from BPMMascota bpm
+			where bpm.mascota.id = :idMascota and bpm.actividad.id = :idActividad and bpm.fechaDesde &lt;= :fechaDesde and bpm.fechaHasta is null
+		</query>
+	</named-query>
+	
+	<named-query name="Bpm.buscarPeriodosAbiertosParaMascotaEnActividad">
+		<description>Cierra período abierto</description>
+		<query>
+		select bpm
+		from BPMMascota bpm 
+		where bpm.mascota.id = :idMascota and bpm.actividad.id = :idActividad and bpm.fechaHasta is null
+		</query>
+	</named-query>
+
+	<named-query name="Bpm.obtenerMascotasDeBPM">
+		<description>Obtiene las mascotas de BPM</description>
+		<query>
+		select bpm
+		from BPMMascota bpm 
+		where bpm.mascota.id = :idMascota
+		</query>
+	</named-query>
+	
+	<named-query name="Bpm.obtenerMascotasPerdidasDeBPM">
+		<description>Obtiene las mascotas perdidas de BPM</description>
+		<query>
+		select bpm
+		from BPMMascota bpm 
+		where bpm.mascotaPerdida.id = :idMascotaPerdida
+		</query>
+	</named-query>
+	
+	<named-query name="Bpm.obtenerMascotasDeBPMPorActividad">
+		<description>Obtiene las mascotas de BPM por actividad</description>
+		<query>
+		select bpm
+		from BPMMascota bpm 
+		where bpm.mascota.id = :idMascota and bpm.actividad.descripcion = :actividad 
+		</query>
+	</named-query>
+	
+	<named-query name="Bpm.obtenerMascotasExtraviadasDeBPMPorActividad">
+		<description>Obtiene las mascotas de BPM por actividad</description>
+		<query>
+		select bpm
+		from BPMMascota bpm 
+		where bpm.mascota.id = :idMascota and bpm.actividad.descripcion = :actividad  and bpm.fechaHasta is null
+		</query>
+	</named-query>
+	
+	<named-query name="Bpm.obtenerBPMDeMascotaExtraviada">
+		<description>Ret bpm de mascota extraviada</description>
+		<query>
+		select bpm from BPMMascota bpm where bpm.mascota.id = :idMascota and bpm.fechaHasta is null order by bpm.fechaDesde desc
+		</query>
+	</named-query>
+	
+	<named-query name="Bpm.obtenerMascotasDeBPMDeUsuario">
+		<description>Obtiene las mascotas de BPM de un usuario</description>
+		<query>
+		select bpm.mascota
+		from BPMMascota bpm 
+		where bpm.usuario.id = :idUsuario
+		</query>
+	</named-query>
+	
+	<named-query name="Codiguera.obtenerDeparamentosPorPais">
+		<description>Departamentos por pais</description>
+		<query>
+		select d from Departamento d
+		where d.pais.id = :idPais
+		</query>
+	</named-query>
+	
+	<named-query name="Codiguera.obtenerLocalidadesPorDepartamento">
+		<description>Localidades por departamentos</description>
+		<query>
+		select l from Localidad l
+		where l.departamento.id = :idDepartamento ORDER BY l.departamento.descripcion
+		</query>
+	</named-query>
+	
+	<named-query name="Codiguera.obtenerLocalidDeDepartamento">
+		<description>Localidad de un departamentos</description>
+		<query>
+		select l from Localidad l
+		where l.departamento.id = :idDepartamento and l.descripcion = :descripcion
+		</query>
+	</named-query>
+	
+	<named-query name="HistoriaClinica.obtenerHistoriasClinicasDeMascota">
+		<description>Obtiene las historias clinicas de una mascota</description>
+		<query> select h from HistoriaClinica h where h.mascota.id = :idMascota
+		</query>
+	</named-query>
+	
+	<named-query name="ConsultaClinica.obtenerConsultasClinicaDeMascota">
+		<description>Obtiene las consultas clinicas de una mascota</description>
+		<query> select h.consultas from HistoriaClinica h where h.mascota.id = :idMascota
+		</query>
+	</named-query>
+	
+	<named-query name="ConsultaClinica.obtenerConsultasClinicasRealizadasPorElUsuario">
+		<description>Obtiene las consultas clinicas realizadas por el usuario</description>
+		<query> select h from ConsultaClinica h where h.usuario.id= :idUsuario
+		</query>
+	</named-query>
+	
+<!-- 	<named-native-query name="Siniestro.obtenerTodosLosSiniestrosConId" result-class="uy.com.porto.gis.entidades.siniestros.Siniestro"> -->
+<!-- 		<description>Esta es una consulta de demostración con SQL nativo utilizando parámetros</description> -->
+<!-- 		<query> -->
+<!-- 			select * from siniestros where id in(:ids) order by id asc -->
+<!-- 		</query> -->
+<!-- 	</named-native-query> -->
+	
+<!-- 	<sql-result-set-mapping name="TallerDTO"> -->
+<!-- 		<constructor-result -->
+<!-- 			target-class="uy.com.porto.gis.dto.TallerDTO"> -->
+<!-- 			<column name="id" class="java.lang.Long"/> -->
+<!-- 			<column name="idTipoTaller" class="java.lang.Long"/> -->
+<!-- 			<column name="costoChapa" class="java.math.BigDecimal"/> -->
+<!-- 			<column name="codigo" class="java.lang.String"/> -->
+<!-- 			<column name="costoPintura" class="java.math.BigDecimal"/> -->
+<!-- 			<column name="costoMecanica" class="java.math.BigDecimal"/> -->
+<!-- 			<column name="latitud" class="java.lang.String"/> -->
+<!-- 			<column name="longitud" class="java.lang.String"/> -->
+<!-- 			<column name="calificacion" class="java.lang.Integer"/> -->
+<!-- 		</constructor-result> -->
+<!-- 	</sql-result-set-mapping> -->
+	
+</entity-mappings>

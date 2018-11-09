@@ -1,0 +1,1558 @@
+{
+	"id": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+	"name": "RUFFO",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"owner": "574635",
+			"lastUpdatedBy": "574635",
+			"lastRevision": 2719926757,
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "df3d74a3-ceee-2d99-8442-fd3d9aa12f48",
+			"name": "Activar usuario",
+			"description": "",
+			"variables": null,
+			"auth": null,
+			"events": null,
+			"order": [],
+			"folders_order": []
+		},
+		{
+			"owner": "574635",
+			"lastUpdatedBy": "574635",
+			"lastRevision": 2719927668,
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "fbedf80d-0440-913b-4b93-4cb082293f9c",
+			"name": "CrearUsuario",
+			"description": "",
+			"variables": null,
+			"auth": null,
+			"events": null,
+			"order": [],
+			"folders_order": []
+		},
+		{
+			"owner": "574635",
+			"lastUpdatedBy": "574635",
+			"lastRevision": 2719927989,
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "6dc15269-67ac-1f0f-c6b0-f16451c3621d",
+			"name": "IniciarSesion",
+			"description": "",
+			"variables": null,
+			"auth": null,
+			"events": null,
+			"order": [
+				"2e737ed8-8122-70a2-5a91-6a33f058a0a5",
+				"3a00517a-f260-2aa8-083a-1107fe8e325b"
+			],
+			"folders_order": []
+		},
+		{
+			"owner": "574635",
+			"lastUpdatedBy": "574635",
+			"lastRevision": 2701103739,
+			"folder": null,
+			"id": "2bd77cb4-138b-68cb-afb2-19363affff64",
+			"name": "Mascota",
+			"description": "",
+			"variables": null,
+			"auth": null,
+			"events": null,
+			"order": [
+				"761d035c-96f3-acd3-24a1-051a3c32862d",
+				"64affc06-da7b-acb2-901e-b19ac47bc29e",
+				"db08badb-ccea-1275-1e43-6d0f0c75dfb7",
+				"96e69791-4677-5aaa-d00b-9804dbe9e23d"
+			],
+			"folders_order": []
+		},
+		{
+			"owner": "574635",
+			"lastUpdatedBy": "574635",
+			"lastRevision": 2652265902,
+			"folder": null,
+			"id": "27c574b7-d3b0-dd20-a9a6-04d111a78f41",
+			"name": "Persona",
+			"description": "",
+			"order": [
+				"37e887bf-978d-890d-0b5b-945703080343",
+				"96b38caf-7e1e-664b-28f2-533a911749bc",
+				"0ff926ea-44ba-5264-ed72-631e7bf24c82",
+				"27bdbb7a-fb07-f127-7a29-396511e4cf98"
+			],
+			"folders_order": []
+		},
+		{
+			"owner": "574635",
+			"lastUpdatedBy": "574635",
+			"lastRevision": 2652265934,
+			"folder": null,
+			"id": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"name": "Usuario",
+			"description": "",
+			"order": [
+				"94b1c15f-4242-16ae-50d7-d108ff26ce12",
+				"a43e34ad-fe3c-7ca0-1730-00fb9fa335a9",
+				"0a4feee1-532a-30cc-ad11-2df7dcb673f3",
+				"b9a0ca9a-5d34-cdcc-d227-7b0d91f0c219",
+				"01805937-48ed-3e34-de90-ee88dc99ef2c",
+				"cde640f3-b4b3-1f69-92c4-fe8255ae769e",
+				"082368ed-4968-e7a7-ae1a-baf0b752676a",
+				"6122627e-db4a-4ab9-fd7b-a83f0eade68f",
+				"24bcbfc3-89f0-dea3-6988-7b8296a9f028",
+				"ba1edce4-71c5-ceda-4104-06d71944c8c2",
+				"5b350765-c16f-0bd4-2cb3-588ee45addde",
+				"7127412d-196c-a513-7488-210c4357eae5",
+				"5cf58155-2ab9-4931-49e0-f0c71e979510",
+				"f2c969b8-b20e-451f-de16-c09061e375c6",
+				"a979ee6d-3e79-67c7-9c0d-563477f5eaf8",
+				"e2c5da96-3666-8a6a-001e-44a5e2d7f7c2",
+				"e704abe5-cd27-6d13-c668-4ace710f268d",
+				"4e67450a-652e-0327-f4aa-de32e8caeaef",
+				"dbe47fe6-25df-cb97-f9ee-ced16b0d7ca2",
+				"b64fab2f-aec0-59ec-86e2-f579cadfb6f0",
+				"fffb4548-acc8-0f93-0926-429f0e3aeb8f",
+				"a21e13c3-de9c-eedd-9f51-010cca853851",
+				"ed83fd62-1ddb-37c6-5c51-766b13c52539",
+				"4cbcc7a5-8f2a-626f-ac6a-7946b7a0608d",
+				"2e737ed8-8122-70a2-5a91-6a33f058a0a5",
+				"3a00517a-f260-2aa8-083a-1107fe8e325b",
+				"55ad8338-e525-b270-67ca-2d407e3a8333"
+			],
+			"folders_order": [
+				"fbedf80d-0440-913b-4b93-4cb082293f9c",
+				"6dc15269-67ac-1f0f-c6b0-f16451c3621d",
+				"df3d74a3-ceee-2d99-8442-fd3d9aa12f48"
+			]
+		}
+	],
+	"folders_order": [
+		"27c574b7-d3b0-dd20-a9a6-04d111a78f41",
+		"226473b7-2f02-0e34-5895-0a07692ffe11",
+		"2bd77cb4-138b-68cb-afb2-19363affff64"
+	],
+	"timestamp": 0,
+	"owner": "574635",
+	"public": false,
+	"requests": [
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "01805937-48ed-3e34-de90-ee88dc99ef2c",
+			"name": "Activar usuario inexistente",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\nAuthorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ\n",
+			"method": "PUT",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/activar/123@s.com",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "082368ed-4968-e7a7-ae1a-baf0b752676a",
+			"name": "Reenviar activacion formato mail incorrecto",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\nAuthorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ\n",
+			"method": "PUT",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/reenviar/activacion?eMail=lalo__perirzxcbhotmail.com",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "eMail",
+					"value": "lalo__perirzxcbhotmail.com",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "0a4feee1-532a-30cc-ad11-2df7dcb673f3",
+			"name": "Eliminar Usuario",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjMxNTE1LCJleHAiOjE1MDk2MzUxMTUsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.gSxSZNZL2NaPjetRkf_Czn2xO3BxUVApDOCFh9fhcHY\n",
+			"method": "DELETE",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario?id=2",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "id",
+					"value": "2",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjMxNTE1LCJleHAiOjE1MDk2MzUxMTUsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.gSxSZNZL2NaPjetRkf_Czn2xO3BxUVApDOCFh9fhcHY",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"responses": [
+				{
+					"owner": "574635",
+					"lastUpdatedBy": "574635",
+					"lastRevision": 2652265898,
+					"request": {
+						"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario?id=12",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [
+							{
+								"key": "id",
+								"value": "12",
+								"equals": true,
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headerData": [],
+						"headers": "",
+						"data": null,
+						"method": "DELETE",
+						"dataMode": "params"
+					},
+					"id": "70460e64-2531-99cd-71c1-469d340053ab",
+					"name": "Eliminar Usuario",
+					"status": "",
+					"responseCode": {
+						"code": 500,
+						"name": "Internal Server Error"
+					},
+					"time": "29",
+					"headers": [
+						{
+							"name": "connection",
+							"key": "connection",
+							"value": "keep-alive",
+							"description": ""
+						},
+						{
+							"name": "content-length",
+							"key": "content-length",
+							"value": "42",
+							"description": ""
+						},
+						{
+							"name": "content-type",
+							"key": "content-type",
+							"value": "application/json",
+							"description": ""
+						},
+						{
+							"name": "date",
+							"key": "date",
+							"value": "Sun, 22 Oct 2017 15:19:58 GMT",
+							"description": ""
+						},
+						{
+							"name": "server",
+							"key": "server",
+							"value": "WildFly/10",
+							"description": ""
+						},
+						{
+							"name": "x-powered-by",
+							"key": "x-powered-by",
+							"value": "Undertow/1",
+							"description": ""
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "No existe usuario con el id proporcionado.",
+					"language": "json",
+					"rawDataType": "text",
+					"requestObject": "{\"url\":\"http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario?id=12\",\"pathVariables\":{},\"pathVariableData\":[],\"queryParams\":[{\"key\":\"id\",\"value\":\"12\",\"equals\":true,\"description\":\"\",\"enabled\":true}],\"headerData\":[],\"headers\":\"\",\"data\":null,\"method\":\"DELETE\",\"dataMode\":\"params\"}",
+					"createdAt": "2017-11-22T15:55:00.000Z",
+					"updatedAt": "2017-11-22T15:55:00.000Z",
+					"write": true
+				}
+			]
+		},
+		{
+			"folder": "27c574b7-d3b0-dd20-a9a6-04d111a78f41",
+			"id": "0ff926ea-44ba-5264-ed72-631e7bf24c82",
+			"name": "Eliminar persona",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "DELETE",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/persona/1",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "24bcbfc3-89f0-dea3-6988-7b8296a9f028",
+			"name": "Crear usuario mail formato incorrecto",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"marcosguichon6109gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "27c574b7-d3b0-dd20-a9a6-04d111a78f41",
+			"id": "27bdbb7a-fb07-f127-7a29-396511e4cf98",
+			"name": "Obtener todas las personas",
+			"dataMode": "params",
+			"data": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/persona/todas?nroPagina=1&cantPorPagina=10",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "nroPagina",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "cantPorPagina",
+					"value": "10",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "2e737ed8-8122-70a2-5a91-6a33f058a0a5",
+			"name": "Iniciar sesion OK clave < 7",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/iniciar/sesion",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "login",
+					"value": "hola",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "password",
+					"value": "twtw",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"nombreUsuario\":\"marcosguichon@gmail.com\",\n  \"clave\":\"123456\"\n}"
+		},
+		{
+			"folder": "27c574b7-d3b0-dd20-a9a6-04d111a78f41",
+			"id": "37e887bf-978d-890d-0b5b-945703080343",
+			"name": "Agregar persona",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/persona",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"ci\":\"46001789\",\n  \"nombre\":\"Marta\",\n  \"apellido\":\"Alarcon\",\n  \"eMail\":\"alarconmarta47@gmail.com\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"domicilio\":\"Rivera 2620\",\n  \"celular\":\"099653627\",\n  \"telefono\":\"Sin telefono\"\n}"
+		},
+		{
+			"id": "3a00517a-f260-2aa8-083a-1107fe8e325b",
+			"name": "Iniciar sesion OK clave vacia",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/iniciar/sesion",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "login",
+					"value": "hola",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "password",
+					"value": "twtw",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"rawModeData": "{\n  \"nombreUsuario\":\"marcosguichon@gmail.com\",\n  \"clave\":\"\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "4cbcc7a5-8f2a-626f-ac6a-7946b7a0608d",
+			"name": "Iniciar sesion OK clave y nombre usuario vacios",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/iniciar/sesion",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "login",
+					"value": "hola",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "password",
+					"value": "twtw",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"nombreUsuario\":\"\",\n  \"clave\":\"123456\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "4e67450a-652e-0327-f4aa-de32e8caeaef",
+			"name": "Crear usuario mail vacio",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"id": "55ad8338-e525-b270-67ca-2d407e3a8333",
+			"headers": "Content-Type: application/json\n//Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/activar?eMail=lalo__p@hotmail.com&codigoConfirmacion=62315",
+			"queryParams": [
+				{
+					"key": "eMail",
+					"value": "lalo__p@hotmail.com",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "codigoConfirmacion",
+					"value": "62315",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Activar usuario codigo incorrecto",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512159652285,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"rawModeData": ""
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "5b350765-c16f-0bd4-2cb3-588ee45addde",
+			"name": "Crear usuario fecha nac. formato > 14 años",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"marcosgui000chon@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"2003-11-14 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "5cf58155-2ab9-4931-49e0-f0c71e979510",
+			"name": "Crear usuario fecha nac. formato = 14 años",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"marcosgui0900chon@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"2003-11-14 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "6122627e-db4a-4ab9-fd7b-a83f0eade68f",
+			"name": "Reenviar activacion mail inexistente",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\nAuthorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ\n",
+			"method": "PUT",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/reenviar/activacion?eMail=lalo__perirzxcb@hotmail.com",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "eMail",
+					"value": "lalo__perirzxcb@hotmail.com",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"id": "64affc06-da7b-acb2-901e-b19ac47bc29e",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/codiguera/tipos/mascotas?nroPagina=1&cantPorPagina=10",
+			"folder": "2bd77cb4-138b-68cb-afb2-19363affff64",
+			"queryParams": [
+				{
+					"key": "nroPagina",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "cantPorPagina",
+					"value": "10",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1512085987546,
+			"name": "Obtener tipos de mascotas",
+			"description": null,
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"id": "7127412d-196c-a513-7488-210c4357eae5",
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"name": "Crear usuario OK",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"auth": null,
+			"events": null,
+			"variables": null,
+			"isFromCollection": true,
+			"collectionRequestId": "7127412d-196c-a513-7488-210c4357eae5",
+			"rawModeData": "{\n  \"eMail\":\"lalo__p@hotmail.com\",\n  \"clave\":\"holaComoEstasMostro123456789\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\",\n  \"sexo\":\"Prefiero no decirlo\"\n}"
+		},
+		{
+			"id": "761d035c-96f3-acd3-24a1-051a3c32862d",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/codiguera/color/tipo?tipoColor=P",
+			"folder": "2bd77cb4-138b-68cb-afb2-19363affff64",
+			"queryParams": [
+				{
+					"key": "tipoColor",
+					"value": "P",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1512087875362,
+			"name": "Obtener colores por tipo",
+			"description": null,
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "94b1c15f-4242-16ae-50d7-d108ff26ce12",
+			"name": "Validar usuario",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/validar",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"nombre\":\"gpereira\",\n  \"clave\":\"123456\"\n}"
+		},
+		{
+			"folder": "27c574b7-d3b0-dd20-a9a6-04d111a78f41",
+			"id": "96b38caf-7e1e-664b-28f2-533a911749bc",
+			"name": "Actualizar persona",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "PUT",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/persona",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"ci\":\"46001789\",\n  \"nombre\":\"Marta\",\n  \"apellido\":\"Alarcon\",\n  \"eMail\":\"alarconmarta47@gmail.com\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"domicilio\":\"Rivera 2620\",\n  \"celular\":\"099653627\",\n  \"telefono\":\"Nuevo tel\"\n}"
+		},
+		{
+			"folder": "2bd77cb4-138b-68cb-afb2-19363affff64",
+			"id": "96e69791-4677-5aaa-d00b-9804dbe9e23d",
+			"name": "Obtener todas las mascotas",
+			"dataMode": "params",
+			"data": null,
+			"auth": null,
+			"events": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"description": null,
+			"variables": null,
+			"headers": "",
+			"method": "GET",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/mascota/todas?nroPagina=1&cantPorPagina=10",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": [
+				{
+					"key": "nroPagina",
+					"value": "1",
+					"equals": true,
+					"enabled": true
+				},
+				{
+					"key": "cantPorPagina",
+					"value": "10",
+					"equals": true,
+					"enabled": true
+				}
+			],
+			"headerData": [],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"id": "a21e13c3-de9c-eedd-9f51-010cca853851",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/iniciar/sesion",
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"queryParams": [
+				{
+					"key": "login",
+					"value": "hola",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "password",
+					"value": "twtw",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1512159629765,
+			"name": "Iniciar sesion OK",
+			"description": "",
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"nombreUsuario\":\"lalo__p@hotmail.com\",\n  \"clave\":\"holaComoEstasMostro123456789\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "a43e34ad-fe3c-7ca0-1730-00fb9fa335a9",
+			"name": "Modificar Usuario",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": "html",
+			"description": "",
+			"headers": "Content-Type: application/json\nAuthorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ\n",
+			"method": "PUT",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"id\":\"2\",\n  \"personaDto\": {\n    \"ci\":\"1.222.333.0\",\n    \"nombre\":\"Marta\",\n    \"apellido\":\"Alarcón\",\n    \"fechaNacimiento\":\"1957-02-14 16:45\",\n    \"domicilio\":\"Rivera 668\",\n    \"celular\":\"099439795\",\n    \"telefono\":\"\"\n  }\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "a979ee6d-3e79-67c7-9c0d-563477f5eaf8",
+			"name": "Crear usuario tipo usuario inexistente",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"martc3osguichon6109@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"pais\":\"Brasil\",\n  \"tipoUsuario\":\"NORMALLITO\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "b64fab2f-aec0-59ec-86e2-f579cadfb6f0",
+			"name": "Crear usuario pais vacio",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"marcosguichon6109@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"id": "b9a0ca9a-5d34-cdcc-d227-7b0d91f0c219",
+			"headers": "Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYWxvX19wQGhvdG1haWwuY29tIiwiYXVkIjoiUnVmZm8iLCJpYXQiOjE1MTE4MjY5OTAsImV4cCI6MTUxMTgzMDU5MCwicm9sZXMiOlt7ImlkIjpudWxsLCJub21icmVSb2wiOiJOT1JNQUwifV19.92JYuDgV4s8xZNOfWshG7VuUVgm6QYFJk-AqTz7pN5c\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYWxvX19wQGhvdG1haWwuY29tIiwiYXVkIjoiUnVmZm8iLCJpYXQiOjE1MTE4MjY5OTAsImV4cCI6MTUxMTgzMDU5MCwicm9sZXMiOlt7ImlkIjpudWxsLCJub21icmVSb2wiOiJOT1JNQUwifV19.92JYuDgV4s8xZNOfWshG7VuUVgm6QYFJk-AqTz7pN5c",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/tipos/usuarios",
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1511826998990,
+			"name": "Obtener tipos de usuario",
+			"description": "",
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "ba1edce4-71c5-ceda-4104-06d71944c8c2",
+			"name": "Crear usuario fecha nac. formato < 14 años",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"mailco8rrecsto@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"2016-01-15 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "cde640f3-b4b3-1f69-92c4-fe8255ae769e",
+			"name": "Activar usuario codigo incorrecto",
+			"dataMode": "raw",
+			"data": [],
+			"rawModeData": "",
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n//Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ\n",
+			"method": "PUT",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/activar?eMail=lalo__perirzxc@hotmail.com&codigoConfirmacion=75379",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "eMail",
+					"value": "lalo__perirzxc@hotmail.com",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "codigoConfirmacion",
+					"value": "75379",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Authorization",
+					"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJncGVyZWlyYSIsImF1ZCI6IlJ1ZmZvIiwiaWF0IjoxNTA5NjI2MzQxLCJleHAiOjE1MDk2Mjk5NDEsInJvbGVzIjpbeyJpZCI6NCwibm9tYnJlUm9sIjoiVVNVQVJJTyJ9XX0.mHdfD3Cc1tHDR5GGCtSvwE0zBV8rSKFfSiJ4hhiWuKQ",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a"
+		},
+		{
+			"folder": "2bd77cb4-138b-68cb-afb2-19363affff64",
+			"id": "db08badb-ccea-1275-1e43-6d0f0c75dfb7",
+			"name": "Agregar mascota",
+			"dataMode": "raw",
+			"data": [],
+			"auth": null,
+			"events": null,
+			"descriptionFormat": "html",
+			"description": null,
+			"variables": null,
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/mascota",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": null,
+			"helperAttributes": null,
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"nombre\":\"Ruffo\",\n  \"sexo\":\"Macho\",\n  \"tipo\":\"Perro\",\n  \"raza\":\"Pit Bull\",\n  \"tamanio\":\"Chico\",\n  \"colorPredominante\":\"Negro\",\n  \"colorSecundario\":\"Otro\",\n  \"nroChip\":\"100000000000025\",\n  \"nroBeacon\":\"uop5225uk\",\n  \"propietario\":\"pereirawg@gmail.com\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "dbe47fe6-25df-cb97-f9ee-ced16b0d7ca2",
+			"name": "Crear usuario pais inexistente",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"martc3osguichon6109@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"pais\":\"Brasil\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "e2c5da96-3666-8a6a-001e-44a5e2d7f7c2",
+			"name": "Crear usuario mail existente",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"marcosguichon6109@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"1980-01-15 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "e704abe5-cd27-6d13-c668-4ace710f268d",
+			"name": "Crear usuario fecha nac. formato incorrecto",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"marcosguichon6109@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"190cdf1-15 16:45\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "ed83fd62-1ddb-37c6-5c51-766b13c52539",
+			"name": "Iniciar sesion OK nombre usuario vacio clave <= 7",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/iniciar/sesion",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "login",
+					"value": "hola",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "password",
+					"value": "twtw",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"nombreUsuario\":\"\",\n  \"clave\":\"123456\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "f2c969b8-b20e-451f-de16-c09061e375c6",
+			"name": "Crear usuario fecha nac. vacia",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"enabled": true,
+					"description": ""
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"eMail\":\"marcosguichon6109@gmail.com\",\n  \"clave\":\"1234567\",\n  \"fechaNacimiento\":\"\",\n  \"pais\":\"Uruguay\",\n  \"tipoUsuario\":\"NORMAL\"\n}"
+		},
+		{
+			"folder": "226473b7-2f02-0e34-5895-0a07692ffe11",
+			"id": "fffb4548-acc8-0f93-0926-429f0e3aeb8f",
+			"name": "Iniciar sesion OK nombre usuario vacio",
+			"dataMode": "raw",
+			"data": [],
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Content-Type: application/json\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "http://localhost:8080/ruffo-core-0.0.1-SNAPSHOT/usuario/iniciar/sesion",
+			"preRequestScript": null,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"queryParams": [
+				{
+					"key": "login",
+					"value": "hola",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				},
+				{
+					"key": "password",
+					"value": "twtw",
+					"equals": true,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"pathVariableData": [],
+			"collectionId": "79e2bb83-dba5-a374-ea05-d2d6457acb3a",
+			"rawModeData": "{\n  \"nombreUsuario\":\"\",\n  \"clave\":\"1234567\"\n}"
+		}
+	]
+}
